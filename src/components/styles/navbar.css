@@ -1,0 +1,52 @@
+.navbar {
+    position: relative;
+    top: 0;
+    height: 80px;
+    display: flex;
+    color: white;
+    font-size: 18px;
+    font-weight: bolder;
+    align-items: center;
+    
+    background-color: rgba(31, 41, 55, 0.8);
+
+    .logo {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            padding: 5px;
+            width: 60px;
+            margin-left: 5px;
+        }
+    }
+    .links {
+        padding-left: 40px;
+        height: 100%;
+        display: flex;
+        /* flex: auto; */
+        gap: 40px;
+        justify-content: start;
+        align-items: center;
+        .dropdown {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+    }
+
+    .login {
+        display: flex;
+        padding-right: 20px;
+        justify-content: end;
+        flex: auto;
+        .log {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+    }
+    
+}
+

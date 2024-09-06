@@ -1,0 +1,11 @@
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.ReactModal__Content {
+  /* padding: 10px;
+  background: rgba(33, 30, 30, 0.5); */
+  /* border-radius: 10px; */
+  max-width: 700px;
+  margin: 100px auto;
+}

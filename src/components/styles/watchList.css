@@ -1,0 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.watch-list {
+  /* font-family: sans-serif; */
+  text-align: center;
+  width: 70vw;
+  margin: 0 auto;
+} 
+
+table {
+  margin: 0px 50px;
+}
+
+tr {
+  border-bottom: 1px solid rgb(104, 227, 255);
+  border-collapse: collapse;
+}
+table th {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.head {
+  color: gold;
+}
+.body {
+  color: whitesmoke;
+}
+.del {
+  color: white;
+  span {
+    padding: 5px 8px;
+    border-radius: 5px;
+    border: 1px solid yellow;
+    cursor: pointer;
+    &:hover {
+      background-color: yellow;
+      color: red;
+    }
+  }
+}
+th,
+td {
+  padding: 10px;
+}
+table img {
+  width: 300px;
+}

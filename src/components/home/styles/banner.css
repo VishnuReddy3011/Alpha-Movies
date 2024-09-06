@@ -1,0 +1,60 @@
+.banner-detail-overlay {
+  background: linear-gradient(180deg,rgba(15,16,20,0) 73.08%,rgba(15,16,20,.01) 77.84%,rgba(15,16,20,.05) 79.74%,#0f1014),linear-gradient(90deg,#0f1014,rgba(15,16,20,.8) 7.31%,rgba(15,16,20,.52) 15.54%,rgba(15,16,20,.12) 29.73%,rgba(15,16,20,0) 100%)
+}
+.slick-next, .slick-prev {
+  z-index: 1;
+}
+
+/* .slick-prev {
+  left: 0!important;
+}
+.slick-next {
+  right: 0!important;
+} */
+
+@media (min-width: 768px) {
+  .slick-prev,
+  .slick-next {
+    top: unset !important;
+    bottom: 12rem !important;
+  }
+  .slick-prev::before,
+  .slick-next::before {
+    font-size: 42px !important;
+  }
+  .slick-prev {
+    left: unset !important;
+    right: 9rem !important;
+  }
+  .slick-next {
+    right: 6rem !important;
+  }
+}
+
+.msg, .info {
+  background-color: #032541;
+  border-radius: 5px;
+  padding: 5px 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.add-btn-container {
+  &:hover {
+    .msg {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.info-container {
+  &:hover {
+    .info {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
