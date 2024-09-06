@@ -22,7 +22,7 @@ const MoviePage = React.memo(() => {
 			.then(response => setMovieInfo(response?.data))
 			.then(() => setPageLoader(false));
 	}, [id])
-	// console.log(movieInfo);
+	console.log(movieInfo);
 
 	// console.log(movie);
 	useEffect(() => {
@@ -94,9 +94,9 @@ const MoviePage = React.memo(() => {
 							<div className="mt-10 mr-10 mb-20 flex flex-col gap-4 flex-4 max-w-[900px]">
 								<div>
 									<a href={movieInfo?.homepage} target='_blank' className="text-4xl font-bold title">
-										{(movie?.title || movie?.original_name || "Title") + " "} 
+										{(movie?.title || movie?.name || movie?.original_name || "Title") + " "} 
 										<span className='year opacity-80'>
-											({movie?.release_date?.substr(0,4) || (movie?.first_air_date?.substr(0,4) + '-' + movieInfo?.last_air_date?.substr(0,4))|| "Year"})
+											({movie?.release_date?.substr(0,4) || (movie?.first_air_date?.substr(0,4) + '-' + (movieInfo?.last_air_date?.substr(0,4) || "") || "Year")})
 										</span>
 									</a>
 									<ul 
@@ -109,7 +109,9 @@ const MoviePage = React.memo(() => {
 											{
 												getRuntime(movieInfo?.runtime) 
 													|| 
-												(movieInfo?.number_of_seasons + "S " + movieInfo?.number_of_episodes + "E")
+												(movieInfo?.number_of_seasons && (movieInfo?.number_of_seasons + "S " + movieInfo?.number_of_episodes + "E"))
+												 	||
+												("N/A")
 											}
 										</li>
 									</ul>

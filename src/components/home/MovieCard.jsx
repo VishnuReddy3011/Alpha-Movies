@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 const MovieCard = React.memo(
   ({ movie, addToWatchList, watchList, removeFromWatchList, isMovie }) => {
     return (
-      <Link to={`movie/${movie?.id}`}>
+      <Link to={`/movie/${movie?.id}`}>
         <div
           style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie["backdrop_path"]})`,
+            backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie["poster_path"]})`,
           }}
           className="h-[40vh] md:w-[200px] bg-center bg-cover rounded-xl hover:scale-110 duration-300 hover:cursor-pointer movie-card"
           onClick={(e) => {

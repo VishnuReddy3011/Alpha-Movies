@@ -30,7 +30,7 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
     <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Movie Trailer" style={customStyles} className="ReactModal__Content text-white">
       <button className='w-full flex justify-between m-3 text-white' onClick={onClose}>
         <span className='relative top-1 right-2 text-2xl'>Play Trailer</span>
-        <i className="fa-sharp fa-solid fa-x mr-3  text-2xl"></i>
+        <i className="fa-sharp fa-solid fa-x relative top-2 right-3 text-xl "></i>
       </button>
       {trailerKey ? (
         <iframe

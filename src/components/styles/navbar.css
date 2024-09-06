@@ -1,5 +1,5 @@
 .navbar {
-    position: relative;
+    /* position: relative; */
     top: 0;
     height: 80px;
     display: flex;
@@ -8,7 +8,7 @@
     font-weight: bolder;
     align-items: center;
     
-    background-color: rgba(31, 41, 55, 0.8);
+    background-color: rgba(31, 41, 55, 77.84%);
 
     .logo {
         height: 100%;
@@ -40,6 +40,7 @@
         display: flex;
         padding-right: 20px;
         justify-content: end;
+        gap: 20px;
         flex: auto;
         .log {
             display: flex;
@@ -50,3 +51,41 @@
     
 }
 
+.search-container {
+    position: relative;
+    display: flex;
+    /* gap: 15px; */
+}
+
+#search-btn {
+    cursor: pointer;
+}
+
+#search-input-field {
+    padding: 5px 10px;
+    font-size: medium;
+    font-weight: 400;
+    position: absolute;
+    right: 30px;
+    width: 150px;
+    transition: right 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    color: black;
+    border-radius: 5px;
+}
+
+#search-input-field.active {
+    right: 100px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-icon {
+    /* opacity: 0; */
+    visibility: hidden;
+}
+
+.search-icon.active {
+    visibility: visible;
+}

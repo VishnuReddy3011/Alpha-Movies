@@ -49,3 +49,14 @@ td {
 table img {
   width: 300px;
 }
+
+#watchlist-search-input {
+  font-size: large;
+  background-color: #0F1014;
+  padding: 5px 10px;
+  border: none;
+  border-bottom: 2px solid white;
+  &:focus {
+    outline: none;
+  }
+}

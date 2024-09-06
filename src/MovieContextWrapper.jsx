@@ -68,6 +68,8 @@ const MovieContextWrapper = ({ children }) => {
         genres += genreids[arr[i]];
         return genres;
     }
+    const [searchText, setSearchText] = useState("");
+
     // 2. create a provider where you will add state and function information
     return (
         <MovieContext.Provider
@@ -77,7 +79,9 @@ const MovieContextWrapper = ({ children }) => {
                         setWatchList, 
                         addToWatchList, 
                         removeFromWatchList, 
-                        getGenres, 
+                        getGenres,
+                        searchText, 
+                        setSearchText
                     }
                 }
         >

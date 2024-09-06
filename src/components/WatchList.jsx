@@ -1,27 +1,36 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { MovieContext } from "../MovieContextWrapper";
 import './styles/watchList.css';
-import { Link } from "react-router-dom";
 
 const WatchList = () => {
   const {watchList, removeFromWatchList} = useContext(MovieContext);
   return (
-    <table className="watch-list">
-      <thead>
-        <tr className="head">
-          <th style={{width: "40%"}}>Name</th>
-          <th>IMDB</th>
-          <th style={{width: "15%"}}>Popularity</th>
-          <th style={{width: "25%"}}>Genre</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          getTbody(watchList, removeFromWatchList)
-        }
-      </tbody>
-    </table>
+    <>
+      <div className="header h-[100px] flex p-8 text-white">
+        <input 
+          type="text" 
+          placeholder="Search watchlist..." 
+          id="watchlist-search-input"
+        />
+      </div>
+      <table className="watch-list mb-10">
+        <thead>
+          <tr className="head">
+            <th style={{width: "40%"}}>Name</th>
+            <th>IMDB</th>
+            <th style={{width: "15%"}}>Popularity</th>
+            <th style={{width: "25%"}}>Genre</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            getTbody(watchList, removeFromWatchList)
+          }
+        </tbody>
+      </table>
+    </>
   );
 };
 
