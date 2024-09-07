@@ -4,6 +4,7 @@ import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
 import Loader from "../../Loader/Loader";
 
+
 const Movies = ({movies, pageNo, handleNext, handlePrevious, setPageNo, title, isMovie, loader}) => {
   const { watchList, addToWatchList, removeFromWatchList } = useContext(MovieContext);
   return (
@@ -12,7 +13,7 @@ const Movies = ({movies, pageNo, handleNext, handlePrevious, setPageNo, title, i
       {
         loader ? (<div className="text-white text-4xl h-[600px] w-full flex justify-center items-center"><Loader /></div>)
           :
-        (<div className="flex flex-wrap gap-16 justify-center">
+        (<div className="flex flex-wrap gap-16 justify-start ml-9">
           {
             movies.map((movieObj) => {
               return (

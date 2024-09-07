@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import Movies from './Movies';
+// import Movies from '';
+const Movies = React.lazy(() => import("./Movies"));
 
 const MoviesAll = () => {
 	const [trendingMovies, setTrendingMovies] = useState([]);

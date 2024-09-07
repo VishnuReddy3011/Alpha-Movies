@@ -40,7 +40,7 @@
         display: flex;
         padding-right: 20px;
         justify-content: end;
-        gap: 20px;
+        gap: 40px;
         flex: auto;
         .log {
             display: flex;
@@ -54,6 +54,7 @@
 .search-container {
     position: relative;
     display: flex;
+    align-items: center;
     /* gap: 15px; */
 }
 
@@ -62,21 +63,32 @@
 }
 
 #search-input-field {
+    display: flex;
+    align-items: center;
     padding: 5px 10px;
     font-size: medium;
-    font-weight: 400;
+    font-weight: 600;
     position: absolute;
     right: 30px;
-    width: 150px;
+    width: max-content;
     transition: right 0.3s ease, opacity 0.3s ease;
     opacity: 0;
     visibility: hidden;
-    color: black;
+    /* color: black; */
     border-radius: 5px;
+    background-color: rgb(58, 75, 58);
+    border: 1px solid greenyellow;
+    input {
+        background-color: inherit;
+        width: 150px;
+        &:focus {
+            outline: none;
+        }
+    }
 }
 
 #search-input-field.active {
-    right: 100px;
+    right: 80px;
     opacity: 1;
     visibility: visible;
 }

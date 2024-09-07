@@ -42,7 +42,7 @@ const SearchPageComponent = React.memo(({result}) => {
   return (
     <div>
       <div className='h-16 p-4 text-3xl mb-4 text-white drop-shadow'>{finalResults.length ? 'Search results' : 'No results available'} for: "{result}"</div>
-      <div className='w-full flex flex-wrap gap-16 justify-center'>
+      <div className='w-full flex flex-wrap gap-16 justify-start ml-9'>
         {
           finalResults.map(movie => {
             return (

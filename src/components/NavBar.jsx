@@ -68,6 +68,31 @@ const NavBar = () => {
               }}
               ref={buttonRef}
             >
+              <span onClick={() => {
+                setTimeout(() => inputRef.current.focus(), 500);
+              }}>Search</span>
+            </button> 
+            <div id="search-input-field" className={isActive ? 'active' : 'not-active'}>
+              <input 
+                type="text" 
+                placeholder="Search movie..." 
+                ref={inputRef}
+                value={temp}
+                onChange={(e) => setTemp(e.target.value)}
+                onKeyDown={(e) => {
+                  if(e.key === "Enter") {
+                    if(!temp) {
+                      e.preventDefault();
+                    }
+                    else {
+                      setSearchText(temp);
+                      setTemp("");
+                      navigate('/movies'); // Navigate to /movies page
+                      setIsActive(false);
+                    }
+                  }
+                }}
+              />
               <Link to='/movies'>
                 <i 
                   className={`fa-sharp-duotone fa-solid fa-magnifying-glass text-base mt-1 search-icon ${isActive ? 'active' : 'not-active'}`}
@@ -83,31 +108,7 @@ const NavBar = () => {
                 >
                 </i>
               </Link>
-              <span onClick={() => {
-                setTimeout(() => inputRef.current.focus(), 500);
-              }}>Search</span>
-            </button> 
-            <input 
-              type="text" id="search-input-field" 
-              placeholder="Search here..." 
-              className={isActive ? 'active' : 'not-active'}
-              ref={inputRef}
-              value={temp}
-              onChange={(e) => setTemp(e.target.value)}
-              onKeyDown={(e) => {
-                if(e.key === "Enter") {
-                  if(!temp) {
-                    e.preventDefault();
-                  }
-                  else {
-                    setSearchText(temp);
-                    setTemp("");
-                    navigate('/movies'); // Navigate to /movies page
-                    setIsActive(false);
-                  }
-                }
-              }}
-            />
+            </div>
           </div>
           <Link className="log">
             <i className="fa-regular fa-user text-sm mt-1"></i>
