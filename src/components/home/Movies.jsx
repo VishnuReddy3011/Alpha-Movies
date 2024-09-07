@@ -12,7 +12,7 @@ const Movies = ({movies, pageNo, handleNext, handlePrevious, setPageNo, title, i
       {
         loader ? (<div className="text-white text-4xl h-[600px] w-full flex justify-center items-center"><Loader /></div>)
           :
-        (<div className="flex justify-evenly flex-wrap gap-8">
+        (<div className="flex flex-wrap gap-16 justify-center">
           {
             movies.map((movieObj) => {
               return (
