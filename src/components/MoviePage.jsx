@@ -22,7 +22,7 @@ const MoviePage = React.memo(() => {
 			.then(response => setMovieInfo(response?.data))
 			.then(() => setPageLoader(false));
 	}, [id])
-	console.log(movieInfo);
+	// console.log(movieInfo);
 
 	// console.log(movie);
 	useEffect(() => {
@@ -119,7 +119,7 @@ const MoviePage = React.memo(() => {
 								<div className='flex gap-4 items-center'>
 									<div className='text-3xl'>
 										<i className="fa-solid fa-star" style={{color: "#FFD43B"}}></i> 
-										{" " + movie?.vote_average.toFixed(1) + "/10" || "N/A"}
+										{" " + (movie?.vote_average !== 0 ? movie?.vote_average.toFixed(1) + "/10" : "N/A") }
 									</div>
 									{
 										!watchList.has(movie?.id) 
@@ -159,7 +159,7 @@ const MoviePage = React.memo(() => {
 									<span className='over font-bold' style={{ whiteSpace: 'pre' }}>
 										
 										{
-											crewInfo?.director ? "Director:  " : "Creators:  "
+											crewInfo?.director ? "Director:  " : "Creators: "
 										}
 									</span>
 									<span className='text-purple-50' style={{ whiteSpace: 'pre' }}>

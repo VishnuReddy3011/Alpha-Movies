@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Headroom from 'react-headroom';
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logo_with_glow.png";
 import './styles/navbar.css';
 import { MovieContext } from "../MovieContextWrapper";
 const NavBar = () => {
@@ -76,6 +76,7 @@ const NavBar = () => {
               <input 
                 type="text" 
                 placeholder="Search movie..." 
+                spellCheck={false}
                 ref={inputRef}
                 value={temp}
                 onChange={(e) => setTemp(e.target.value)}
@@ -95,7 +96,7 @@ const NavBar = () => {
               />
               <Link to='/movies'>
                 <i 
-                  className={`fa-sharp-duotone fa-solid fa-magnifying-glass text-base mt-1 search-icon ${isActive ? 'active' : 'not-active'}`}
+                  className={`fa-sharp-duotone fa-solid fa-magnifying-glass text-base search-icon ${isActive ? 'active' : 'not-active'}`}
                   onClick={(e) => {
                     if(!temp) {
                       e.preventDefault();

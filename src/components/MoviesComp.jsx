@@ -67,7 +67,7 @@ const MoviesPageComponent = React.memo(() => {
 
 const MoviesComp = React.memo(() => {
   const {searchText} = useContext(MovieContext);
-  console.log(searchText);
+  // console.log(searchText);
   return (
     <div className='mb-10'>
       {

@@ -11,12 +11,28 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
   
   const URL_PREFIX = "https://api.themoviedb.org/3/";
   const API_KEY = "bba723222ce35673cae76bc15ffb91c1";
-
+  
+  
   useEffect(() => {
     axios.get(`${URL_PREFIX}${isMovie ? 'movie' : 'tv'}/${movieId}/videos?api_key=${API_KEY}&language=en-US`)
         .then(response => {
-            const trailers = response.data.results.filter(video => video.type === 'Trailer' && video.site === 'YouTube');
-            setTrailerKey(() => trailers?.length > 0 ? trailers[0]?.key : null)
+            // const trailers = response.data.results.filter(video => {
+            //   if(video?.name?.includes("Official Trailer")) return true;
+            //   return video.type === 'Trailer' && video.site === 'YouTube' && video.official === true;
+            // });
+            // console.log(trailers);
+            // setTrailerKey(() => trailers?.length > 0 ? trailers[0]?.key : null)
+            let keyFound = null;
+            for(const video of response?.data?.results) {
+              if(video?.name?.includes("Official Trailer")) {
+                keyFound = video?.key;
+                break;
+              }
+              if(video.type === 'Trailer' && video.site === 'YouTube') {
+                keyFound = video?.key;
+              }
+            }
+            setTrailerKey(keyFound);
         })
         .catch(console.log);
   }, [movieId]);
