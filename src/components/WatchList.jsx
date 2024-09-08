@@ -8,10 +8,10 @@ const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFla
   const { getGenres } = useContext(MovieContext);
   return (
     <tr key={movieObj.id} className="body">
-      <td className="flex flex-col items-center">
+      <td className="flex items-center justify-start gap-2">
         <Link to={`/movie/${movieObj?.id}`}>
           <img
-            src={`https://image.tmdb.org/t/p/original/${movieObj?.backdrop_path || movieObj?.poster_path}`}
+            src={`https://image.tmdb.org/t/p/original/${movieObj?.poster_path || movieObj?.background_path}`}
             alt={movieObj.title || movieObj.name}
             onClick={() => {
               localStorage.setItem("singleMovie", JSON.stringify(movieObj));
@@ -59,9 +59,9 @@ const WatchList = () => {
         id="watchlist-search-input"
         onChange={(e) => setText(e.target.value.toLowerCase())}
       />
-      <div className="absolute top-24 text-white right-[300px] w-[500px] h-[360px] flex flex-col items-end">
+      <div className="absolute top-24 text-white right-[300px] w-[700px] h-[395px] flex flex-col items-end">
         <div 
-          className="flex gap-2 items-center hoverDiv m-2 cursor-pointer"
+          className="flex gap-2 items-center hoverDiv cursor-pointer"
           onMouseEnter={() => setDisplayVal("100%")}
           onMouseLeave={() => setDisplayVal("0")}
         >
@@ -69,21 +69,21 @@ const WatchList = () => {
           <i className="fa-solid fa-angle-down mt-1"></i>
         </div>
         <div
-          className="w-full ulTag flex items-center justify-center"
+          className="w-full ulTag flex pl-12 my-[20px]"
           style={{height: `${displayVal}`}}
           onMouseEnter={() => setDisplayVal("100%")}
           onMouseLeave={() => setDisplayVal("0")}
         >
           <ul>
-            <li><span onClick={() => setGenreVal(null)}>All</span></li>
-            {getGenreOptions(watchList, genreids, setGenreVal)}
+            <li><span style={{color: "gold"}} onClick={() => setGenreVal(null)}>All</span></li>
+            {getGenreOptions(genreids, setGenreVal)}
           </ul>
         </div>
       </div>
       <table className="watch-list mb-10 -mt-5">
         <thead>
           <tr className="head">
-            <th style={{ width: "40%" }}>Name</th>
+            <th style={{ width: "35%" }}>Name</th>
             <th>IMDB</th>
             <th style={{ width: "15%" }}>Popularity</th>
             <th style={{ width: "25%" }}>Genre</th>
@@ -122,23 +122,18 @@ function getTbody(watchList, removeFromWatchList, text, genreVal, genreids) { //
   return res;
 }
 
-function getGenreOptions(watchList, genreids, setGenreVal) { // useCallback
-  const iterator = watchList[Symbol.iterator]();
-  const genreSet = new Set();
-  for (const [_, [movieObj, isMovie]] of iterator) {
-    for (const id of movieObj?.genre_ids) {
-      genreSet.add(genreids[id]);
-    }
-  }
-  return [...genreSet].map((item, idx) => {
-    return (
-      <li key={idx}>
+function getGenreOptions(genreids, setGenreVal) { // useCallback
+  const res = [];
+  for(const key in genreids) {
+    res.push (
+      <li key={key}>
         <span
-          onClick={() => setGenreVal(item)}
+          onClick={() => setGenreVal(genreids[key])}
         >
-          {item}
+          {genreids[key]}
         </span>
       </li>
     )
-  })
+  }
+  return res;
 }

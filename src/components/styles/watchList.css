@@ -42,7 +42,7 @@ td {
   padding: 10px;
 }
 table img {
-  width: 300px;
+  width: 100px;
 }
 
 #watchlist-search-input {
@@ -63,15 +63,25 @@ table img {
 
 ul {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   padding: 0;
+  /* overflow: hidden; */
   list-style-type: none;
+  margin: 20px 0px !important;
 }
 .ulTag {
   background-color: #373942;
   overflow: hidden;
-  transition: height 0.8s ease;
+  transition: height 1.2s ease;
+  /* border-radius: 10px; */
+  /* border-top-right-radius: 0px !important; */
+  margin-top: -1px !important;
+}
+
+.hoverDiv {
+  padding: 10px;
+  background-color: #373942;
 }
 
 li {
@@ -82,7 +92,7 @@ li {
   span {
     cursor: pointer;
     &:hover {
-      color: red;
+      color: red !important;
     }
   }
 }
