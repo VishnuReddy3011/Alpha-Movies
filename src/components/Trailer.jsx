@@ -28,7 +28,7 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
                 keyFound = video?.key;
                 break;
               }
-              if(video.type === 'Trailer' && video.site === 'YouTube') {
+              if((video.type === 'Trailer' || video.type === 'Teaser') && video.site === 'YouTube') {
                 keyFound = video?.key;
               }
             }

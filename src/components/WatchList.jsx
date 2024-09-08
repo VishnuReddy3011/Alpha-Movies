@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MovieContext } from "../MovieContextWrapper";
 import './styles/watchList.css';
 
-const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, flag }) => {
-  if (!flag) return null;
+const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFlag, genreFlag }) => {
+  if (!searchFlag || !genreFlag) return null;
   const { getGenres } = useContext(MovieContext);
   return (
     <tr key={movieObj.id} className="body">
@@ -26,16 +26,18 @@ const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, flag }) =
       <td>{movieObj.popularity}</td>
       <td>{getGenres(movieObj.genre_ids)}</td>
       <td className="del">
-        <span onClick={() => removeFromWatchList(movieObj)}>Remove</span>
+        <span className="btn-ani" onClick={() => removeFromWatchList(movieObj)}>Remove</span>
       </td>
     </tr>
   );
 });
 
 const WatchList = () => {
-  const { watchList, removeFromWatchList } = useContext(MovieContext);
+  const { watchList, removeFromWatchList, genreids } = useContext(MovieContext);
   const [text, setText] = useState("");
   const [debouncedText, setDebouncedText] = useState(text);
+  const [displayVal, setDisplayVal] = useState("0");
+  const [genreVal, setGenreVal] = useState(null);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -50,13 +52,33 @@ const WatchList = () => {
 
   return (
     <>
-      <div className="header h-[100px] flex p-8 text-white">
-        <input
-          type="text"
-          placeholder="Search watchlist..."
-          id="watchlist-search-input"
-          onChange={(e) => setText(e.target.value.toLowerCase())}
-        />
+      <input
+        className="mx-4 my-6"
+        type="text"
+        placeholder="Search watchlist..."
+        id="watchlist-search-input"
+        onChange={(e) => setText(e.target.value.toLowerCase())}
+      />
+      <div className="absolute top-24 text-white right-[300px] w-[500px] h-[360px] flex flex-col items-end">
+        <div 
+          className="flex gap-2 items-center hoverDiv m-2 cursor-pointer"
+          onMouseEnter={() => setDisplayVal("100%")}
+          onMouseLeave={() => setDisplayVal("0")}
+        >
+          <span>Genre</span>
+          <i className="fa-solid fa-angle-down mt-1"></i>
+        </div>
+        <div
+          className="w-full ulTag flex items-center justify-center"
+          style={{height: `${displayVal}`}}
+          onMouseEnter={() => setDisplayVal("100%")}
+          onMouseLeave={() => setDisplayVal("0")}
+        >
+          <ul>
+            <li><span onClick={() => setGenreVal(null)}>All</span></li>
+            {getGenreOptions(watchList, genreids, setGenreVal)}
+          </ul>
+        </div>
       </div>
       <table className="watch-list mb-10 -mt-5">
         <thead>
@@ -68,7 +90,7 @@ const WatchList = () => {
             <th></th>
           </tr>
         </thead>
-        <tbody>{getTbody(watchList, removeFromWatchList, debouncedText)}</tbody>
+        <tbody>{getTbody(watchList, removeFromWatchList, debouncedText, genreVal, genreids)}</tbody>
       </table>
     </>
   );
@@ -76,7 +98,7 @@ const WatchList = () => {
 
 export default WatchList;
 
-function getTbody(watchList, removeFromWatchList, text) {
+function getTbody(watchList, removeFromWatchList, text, genreVal, genreids) { // useCallback
   const iterator = watchList[Symbol.iterator]();
   const res = [];
   for (const [_, [movieObj, isMovie]] of iterator) {
@@ -86,12 +108,37 @@ function getTbody(watchList, removeFromWatchList, text) {
         movieObj={movieObj}
         removeFromWatchList={removeFromWatchList}
         isMovie={isMovie}
-        flag={
+        searchFlag={
           movieObj?.name?.toLowerCase().includes(text) ||
           movieObj?.title?.toLowerCase().includes(text)
         }
+        genreFlag={
+          genreVal === null || movieObj?.genre_ids?.some(id => genreids[id] === genreVal)
+        }
+
       />
     );
   }
   return res;
+}
+
+function getGenreOptions(watchList, genreids, setGenreVal) { // useCallback
+  const iterator = watchList[Symbol.iterator]();
+  const genreSet = new Set();
+  for (const [_, [movieObj, isMovie]] of iterator) {
+    for (const id of movieObj?.genre_ids) {
+      genreSet.add(genreids[id]);
+    }
+  }
+  return [...genreSet].map((item, idx) => {
+    return (
+      <li key={idx}>
+        <span
+          onClick={() => setGenreVal(item)}
+        >
+          {item}
+        </span>
+      </li>
+    )
+  })
 }

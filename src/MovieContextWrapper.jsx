@@ -81,7 +81,8 @@ const MovieContextWrapper = ({ children }) => {
                         removeFromWatchList, 
                         getGenres,
                         searchText, 
-                        setSearchText
+                        setSearchText,
+                        genreids
                     }
                 }
         >
