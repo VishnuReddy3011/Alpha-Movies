@@ -7,7 +7,7 @@
 .watch-list {
   /* font-family: sans-serif; */
   text-align: center;
-  width: 70vw;
+  width: 90vw;
   margin: 0 auto;
 } 
 
@@ -144,4 +144,12 @@ li {
 .btn-ani:hover {
   /* box-shadow: inset 0px 0px 25px #1479EA; */
   box-shadow: inset 0px 0px 25px #ea6614;
+}
+
+.ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }

@@ -20,13 +20,18 @@ const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFla
           />
         </Link>
         <br />
-        <span>{movieObj.title || movieObj.name}</span>
+        <div className="flex flex-col items-start text-start">
+          <span className="font-bold">{movieObj.title || movieObj.name}</span>
+          <p className="ellipsis w-[400px]">{movieObj?.overview}</p>
+        </div>
       </td>
       <td>{movieObj.vote_average.toFixed(1)}</td>
       <td>{movieObj.popularity}</td>
       <td>{getGenres(movieObj.genre_ids)}</td>
       <td className="del">
-        <span className="btn-ani" onClick={() => removeFromWatchList(movieObj)}>Remove</span>
+        <span onClick={() => removeFromWatchList(movieObj)}>
+          <i className="fa-solid fa-trash-can text-xl" style={{color: "#ff0000"}}></i>
+        </span>
       </td>
     </tr>
   );
@@ -83,10 +88,10 @@ const WatchList = () => {
       <table className="watch-list mb-10 -mt-5">
         <thead>
           <tr className="head">
-            <th style={{ width: "35%" }}>Name</th>
+            <th style={{ width: "50%" }}>Name</th>
             <th>IMDB</th>
             <th style={{ width: "15%" }}>Popularity</th>
-            <th style={{ width: "25%" }}>Genre</th>
+            <th style={{ width: "35%" }}>Genre</th>
             <th></th>
           </tr>
         </thead>
