@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { MovieContext } from "../MovieContextWrapper";
 import './styles/watchList.css';
@@ -8,7 +8,7 @@ const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFla
   const { getGenres } = useContext(MovieContext);
   return (
     <tr key={movieObj.id} className="body">
-      <td className="flex items-center justify-start gap-2">
+      <td className="flex justify-start gap-2">
         <Link to={`/movie/${movieObj?.id}`}>
           <img
             src={`https://image.tmdb.org/t/p/original/${movieObj?.poster_path || movieObj?.background_path}`}
@@ -27,7 +27,7 @@ const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFla
       </td>
       <td>{movieObj.vote_average.toFixed(1)}</td>
       <td>{movieObj.popularity}</td>
-      <td>{getGenres(movieObj.genre_ids)}</td>
+      <td>{getGenres(movieObj.genre_ids || [])}</td>
       <td className="del">
         <span onClick={() => removeFromWatchList(movieObj)}>
           <i className="fa-solid fa-trash-can text-xl" style={{color: "#ff0000"}}></i>
@@ -37,12 +37,28 @@ const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFla
   );
 });
 
-const WatchList = () => {
+const WatchList = React.memo(() => {
   const { watchList, removeFromWatchList, genreids } = useContext(MovieContext);
   const [text, setText] = useState("");
   const [debouncedText, setDebouncedText] = useState(text);
   const [displayVal, setDisplayVal] = useState("0");
   const [genreVal, setGenreVal] = useState(null);
+  const ulRef = useRef(null);
+
+  const handleClick = (e) => {
+    const ulElement = ulRef.current;
+    if (ulElement) {
+      const childNodes = ulElement.childNodes;
+      for (let i = 0; i < childNodes.length; i++) {
+        if(childNodes[i] === e.target.parentNode) {
+          childNodes[i].style.color = "red";
+        }
+        else {
+          childNodes[i].style.color = "white";
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -55,6 +71,8 @@ const WatchList = () => {
     };
   }, [text]); // Only run the effect when `text` changes
 
+  const [sortOpt, setSortOpt] = useState("Default");
+
   return (
     <>
       <input
@@ -64,7 +82,7 @@ const WatchList = () => {
         id="watchlist-search-input"
         onChange={(e) => setText(e.target.value.toLowerCase())}
       />
-      <div className="absolute top-24 text-white right-[300px] w-[700px] h-[395px] flex flex-col items-end">
+      <div className="absolute top-24 right-[300px] text-white w-[700px] h-[395px] flex flex-col items-end">
         <div 
           className="flex gap-2 items-center hoverDiv cursor-pointer"
           onMouseEnter={() => setDisplayVal("100%")}
@@ -79,11 +97,19 @@ const WatchList = () => {
           onMouseEnter={() => setDisplayVal("100%")}
           onMouseLeave={() => setDisplayVal("0")}
         >
-          <ul>
+          <ul 
+            className="ul-Spl"
+            ref={ulRef}
+            onClick={handleClick}
+          >
             <li><span style={{color: "gold"}} onClick={() => setGenreVal(null)}>All</span></li>
             {getGenreOptions(genreids, setGenreVal)}
           </ul>
         </div>
+      </div>
+      <div className="text-white absolute top-24 right-[100px] p-[10px] flex justify-center items-center hoverDiv gap-2">
+        <span>Sort by : {sortOpt}</span>
+        <i className="fa-solid fa-angle-down mt-1"></i>
       </div>
       <table className="watch-list mb-10 -mt-5">
         <thead>
@@ -99,27 +125,26 @@ const WatchList = () => {
       </table>
     </>
   );
-};
+});
 
 export default WatchList;
 
 function getTbody(watchList, removeFromWatchList, text, genreVal, genreids) { // useCallback
+  // watchList = new Map([...watchList.entries()].sort((a, b) => a[1][0].vote_average.toFixed(1) - b[1][0].vote_average.toFixed(1)))
   const iterator = watchList[Symbol.iterator]();
   const res = [];
   for (const [_, [movieObj, isMovie]] of iterator) {
+    const searchFlag = useMemo(() => movieObj?.name?.toLowerCase().includes(text) || movieObj?.title?.toLowerCase().includes(text), [text, movieObj]);
+    const genreFlag = useMemo(() => genreVal === null || movieObj?.genre_ids?.some(id => genreids[id] === genreVal), [genreVal, genreids, movieObj]);
+
     res.push(
       <TableRow
         key={movieObj.id}
         movieObj={movieObj}
         removeFromWatchList={removeFromWatchList}
         isMovie={isMovie}
-        searchFlag={
-          movieObj?.name?.toLowerCase().includes(text) ||
-          movieObj?.title?.toLowerCase().includes(text)
-        }
-        genreFlag={
-          genreVal === null || movieObj?.genre_ids?.some(id => genreids[id] === genreVal)
-        }
+        searchFlag={searchFlag}
+        genreFlag={genreFlag}
 
       />
     );

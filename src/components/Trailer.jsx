@@ -20,7 +20,7 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
             //   if(video?.name?.includes("Official Trailer")) return true;
             //   return video.type === 'Trailer' && video.site === 'YouTube' && video.official === true;
             // });
-            // console.log(trailers);
+            // console.log(response?.data?.results);
             // setTrailerKey(() => trailers?.length > 0 ? trailers[0]?.key : null)
             let keyFound = null;
             for(const video of response?.data?.results) {

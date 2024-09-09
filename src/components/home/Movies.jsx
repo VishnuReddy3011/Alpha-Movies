@@ -5,7 +5,7 @@ import Pagination from "./Pagination";
 import Loader from "../../Loader/Loader";
 
 
-const Movies = ({movies, pageNo, handleNext, handlePrevious, setPageNo, title, isMovie, loader}) => {
+const Movies = React.memo(({movies, pageNo, handleNext, handlePrevious, setPageNo, title, isMovie, loader}) => {
   const { watchList, addToWatchList, removeFromWatchList } = useContext(MovieContext);
   return (
     <div>
@@ -38,6 +38,6 @@ const Movies = ({movies, pageNo, handleNext, handlePrevious, setPageNo, title, i
       />
     </div>
   );
-};
+});
 
 export default Movies;

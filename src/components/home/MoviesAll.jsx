@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 // import Movies from '';
 const Movies = React.lazy(() => import("./Movies"));
 
-const MoviesAll = () => {
+const MoviesAll = React.memo(() => {
 	const [trendingMovies, setTrendingMovies] = useState([]);
 	const [trendingPageNo, setTrendingPageNo] = useState(() =>  JSON.parse(localStorage.getItem("trendingPageNo")) || 1);
 	const [trendingLoader, setTrendingLoader] = useState(true);
@@ -78,6 +78,6 @@ const MoviesAll = () => {
 		/>
     </div>
   )
-}
+});
 
 export default MoviesAll

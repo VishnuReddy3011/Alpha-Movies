@@ -16,7 +16,8 @@ table {
 }
 
 tr {
-  border-bottom: 1px solid rgb(104, 227, 255);
+  /* border-bottom: 1px solid rgb(104, 227, 255); */
+  border-bottom: 1px solid gold;
   border-collapse: collapse;
 }
 table th {
@@ -61,7 +62,7 @@ table img {
   color: yellowgreen;
 } */
 
-ul {
+.ul-Spl {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
@@ -82,6 +83,13 @@ ul {
 .hoverDiv {
   padding: 10px;
   background-color: #373942;
+}
+
+.sort-select {
+  background-color: inherit;
+  text-align: center;
+  /* font-weight: 700; */
+  color: gold;
 }
 
 li {
@@ -149,7 +157,7 @@ li {
 .ellipsis {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-line-clamp: 3; /* Number of lines to show */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }

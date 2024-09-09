@@ -3,8 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import { MovieContext } from '../MovieContextWrapper';
-import './styles/moviePage.css';
 import Trailer from './Trailer';
+import './styles/moviePage.css';
 const MoviePage = React.memo(() => {
 	const movie = JSON.parse(localStorage.getItem("singleMovie")) || {};
 	const {id} = useParams();
@@ -91,7 +91,7 @@ const MoviePage = React.memo(() => {
 						)
 							:
 						(
-							<div className="mt-10 mr-10 mb-20 flex flex-col gap-4 flex-4 max-w-[900px]">
+							<div className="mt-10 mr-10 flex flex-col gap-4 flex-4 max-w-[900px]">
 								<div>
 									<a href={movieInfo?.homepage} target='_blank' className="text-4xl font-bold title">
 										{(movie?.title || movie?.name || movie?.original_name || "Title") + " "} 
@@ -100,8 +100,8 @@ const MoviePage = React.memo(() => {
 										</span>
 									</a>
 									<ul 
-										style={{ listStyleType: 'disc' }}
-										className='flex gap-6 ml-5 opacity-80 small-txt'
+										style={{ listStyleType: 'disc', margin: "0px" }}
+										className='flex gap-6 opacity-80 small-txt'
 									>
 										<li>{new Date(movie?.release_date || movie?.first_air_date).toString().substring(3, 15) || "N/A"} ({movieInfo?.origin_country[0]})</li>
 										<li>{getGenres(movie?.genre_ids)}</li>
