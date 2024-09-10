@@ -204,7 +204,7 @@ const WatchList = React.memo(() => {
             <th></th>
           </tr>
         </thead>
-        <tbody>{getTbody(watchList, removeFromWatchList, debouncedText, genreVal, genreids, sortOpt, titleOrder, imdbOrder)}</tbody>
+        <tbody>{getTbody(watchList, removeFromWatchList, debouncedText, genreVal, genreids, sortOpt, titleOrder, imdbOrder, popuOrder)}</tbody>
       </table>
     </>
   );
@@ -212,7 +212,7 @@ const WatchList = React.memo(() => {
 
 export default WatchList;
 
-function getTbody(watchList, removeFromWatchList, text, genreVal, genreids, sortOpt, titleOrder, imdbOrder) { // useCallback
+function getTbody(watchList, removeFromWatchList, text, genreVal, genreids, sortOpt, titleOrder, imdbOrder, popuOrder) { // useCallback
   // watchList = new Map([...watchList.entries()].sort((a, b) => a[1][0].vote_average.toFixed(1) - b[1][0].vote_average.toFixed(1)))
   if(sortOpt !== "Default") {
     if(sortOpt === "Title") {
@@ -235,6 +235,14 @@ function getTbody(watchList, removeFromWatchList, text, genreVal, genreids, sort
           return b[1][0].vote_average.toFixed(1) - a[1][0].vote_average.toFixed(1)
         }
         return a[1][0].vote_average.toFixed(1) - b[1][0].vote_average.toFixed(1);
+      }));
+    }
+    else {
+      watchList = new Map([...watchList.entries()].sort((a, b) => {
+        if(popuOrder) {
+          return b[1][0].popularity - a[1][0].popularity
+        }
+        return a[1][0].popularity - b[1][0].popularity;
       }));
     }
   }
