@@ -45,7 +45,7 @@ const NavBar = () => {
         <div className="links relative">
           <Link to="/"> Home </Link>
           
-          <div className="absolute top-[27px] left-56 h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
+          <div className="absolute top-[27px] left-24 h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
             <span
               onMouseEnter={e => {
                 e.target.nextElementSibling.style.height = "100%";
@@ -80,7 +80,7 @@ const NavBar = () => {
               </ul>
             </div>
           </div>
-          <div className="absolute top-[27px] left-[330px] h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
+          <div className="absolute top-[27px] left-52 h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
             <span
               onMouseEnter={e => {
                 e.target.nextElementSibling.style.height = "100%";
@@ -115,7 +115,9 @@ const NavBar = () => {
               </ul>
             </div>
           </div>
-          <Link to="/watchList"> Watch List </Link>
+          <div className="absolute top-[25px] left-[355px] w-max">
+            <Link to="/watchList"> Watch List </Link>
+          </div>
         </div>
         <div className="login">
           <div className="search-container">
