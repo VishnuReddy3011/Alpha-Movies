@@ -12,7 +12,7 @@ const WatchList = React.memo(() => {
   const [sortOpt, setSortOpt] = useState("Default");
   const [titleOrder, setTitleOrder] = useState(true);
   const [imdbOrder, setImdbOrder] = useState(false);
-  const [popuOrder, setPopuOrder] = useState(true); 
+  const [popuOrder, setPopuOrder] = useState(false); 
 
   useEffect(() => {
     setWatchList(() => {
@@ -87,7 +87,7 @@ const WatchList = React.memo(() => {
     else if(sortOpt === "Popularity") {
       const newWatchList = [...watchList.entries()];
       newWatchList.sort((a, b) => {
-        if(popuOrder) {
+        if(!popuOrder) {
           return b[1][0].popularity - a[1][0].popularity
         }
         return a[1][0].popularity - b[1][0].popularity;
