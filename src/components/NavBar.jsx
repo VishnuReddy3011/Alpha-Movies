@@ -42,19 +42,19 @@ const NavBar = () => {
           </Link>
         </div>
         <div className="links">
-          <Link to="/"> Home </Link>
-          <div className="dropdown">
+          <Link to="/"> Movies </Link>
+          {/* <div className="dropdown">
               <span> Genre </span>
               <i className="fa-solid fa-angle-down mt-1"></i>
           </div>
           <div className="dropdown">
               <span> Country </span>
               <i className="fa-solid fa-angle-down mt-1"></i>
-          </div>
-          <Link to="/movies" onClick={() => setSearchText("")}> Movies </Link>
+          </div> */}
+          {/* <Link to="/movies" onClick={() => setSearchText("")}> Movies </Link> */}
           {/* paina onclick rayu */}
-          <Link to="/"> TV Series </Link>
-          <Link to="/"> Top IMDB </Link>
+          {/* <Link to="/"> TV Series </Link>
+          <Link to="/"> Top IMDB </Link> */}
           <Link to="/watchList"> Watch List </Link>
         </div>
         <div className="login">

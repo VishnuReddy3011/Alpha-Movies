@@ -1,64 +1,25 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { MovieContext } from "../MovieContextWrapper";
+import TableRow from "./TableRow";
 import './styles/watchList.css';
 
-const TableRow = React.memo(({ movieObj, removeFromWatchList, isMovie, searchFlag, genreFlag }) => {
-  if (!searchFlag || !genreFlag) return null;
-  const { getGenres } = useContext(MovieContext);
-  return (
-    <tr key={movieObj.id} className="body">
-      <td className="flex justify-start gap-2">
-        <Link to={`/movie/${movieObj?.id}`}>
-          <img
-            src={`https://image.tmdb.org/t/p/original/${movieObj?.poster_path || movieObj?.background_path}`}
-            alt={movieObj.title || movieObj.name}
-            onClick={() => {
-              localStorage.setItem("singleMovie", JSON.stringify(movieObj));
-              localStorage.setItem("isMovie", JSON.stringify(isMovie));
-            }}
-          />
-        </Link>
-        <br />
-        <div className="flex flex-col items-start text-start">
-          <span className="font-bold">{movieObj.title || movieObj.name}</span>
-          <p className="ellipsis w-[400px]">{movieObj?.overview}</p>
-        </div>
-      </td>
-      <td>{movieObj.vote_average.toFixed(1)}</td>
-      <td>{movieObj.popularity}</td>
-      <td>{getGenres(movieObj.genre_ids || [])}</td>
-      <td className="del">
-        <span onClick={() => removeFromWatchList(movieObj)}>
-          <i className="fa-solid fa-trash-can text-xl" style={{color: "#ff0000"}}></i>
-        </span>
-      </td>
-    </tr>
-  );
-});
 
 const WatchList = React.memo(() => {
-  const { watchList, removeFromWatchList, genreids } = useContext(MovieContext);
+  let { watchList, setWatchList ,removeFromWatchList, genreids, isEmpty } = useContext(MovieContext);
   const [text, setText] = useState("");
   const [debouncedText, setDebouncedText] = useState(text);
-  const [displayVal, setDisplayVal] = useState("0");
   const [genreVal, setGenreVal] = useState(null);
-  const ulRef = useRef(null);
+  const [sortOpt, setSortOpt] = useState("Default");
+  const [titleOrder, setTitleOrder] = useState(true);
+  const [imdbOrder, setImdbOrder] = useState(false);
+  const [popuOrder, setPopuOrder] = useState(true); 
 
-  const handleClick = (e) => {
-    const ulElement = ulRef.current;
-    if (ulElement) {
-      const childNodes = ulElement.childNodes;
-      for (let i = 0; i < childNodes.length; i++) {
-        if(childNodes[i] === e.target.parentNode) {
-          childNodes[i].style.color = "red";
-        }
-        else {
-          childNodes[i].style.color = "white";
-        }
-      }
-    }
-  };
+  useEffect(() => {
+    setWatchList(() => {
+      const savedWatchList = JSON.parse(localStorage.getItem('watchList'));
+      return !isEmpty(savedWatchList) ? new Map(savedWatchList) : new Map();
+    })
+  }, [])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -71,11 +32,90 @@ const WatchList = React.memo(() => {
     };
   }, [text]); // Only run the effect when `text` changes
 
-  const [sortVal, setSortVal] = useState("0");
-  const [sortOpt, setSortOpt] = useState("Default");
-  const [titleOrder, setTitleOrder] = useState(true);
-  const [imdbOrder, setImdbOrder] = useState(false);
-  const [popuOrder, setPopuOrder] = useState(true); 
+  const handleGenre = useCallback(e => {
+    const ulChildren = e.currentTarget.children;
+    for(let i = 1; i < ulChildren.length; i++) {
+      ulChildren[i].firstChild.style.color = "white";
+    }
+    if(e.target.parentNode !== ulChildren[0]) {
+      e.target.style.color = "red";
+    }
+  }, [])
+
+  const handleSort = useCallback(e => {
+    // console.log(e.currentTarget);
+    const ulChildren = e.currentTarget.children;
+    // console.log(ulChildren);
+    const text = e.target.textContent || e.target.parentNode.textContent
+    for(let i = 1; i < ulChildren.length; i++) {
+      if(text === ulChildren[i].textContent) {
+        ulChildren[i].style.color = "red";
+      }
+      else {
+        ulChildren[i].style.color = "white";
+      }
+    }
+  }, []);
+
+  const getTbody = () => {
+    // watchlist sort methods
+    if(watchList.size === 0) {
+      return;
+    }
+    if(sortOpt === "Title") {
+      const newWatchList = [...watchList.entries()];
+      newWatchList.sort((a, b) => {
+        let title1 = (a[1][0].title || a[1][0].name);
+        let title2 = (b[1][0].title || b[1][0].name);            
+        if(titleOrder) {
+          return title1.localeCompare(title2);
+        }
+        return title2.localeCompare(title1);
+      })
+      watchList = new Map(newWatchList);
+    }
+    else if(sortOpt === "IMDB") {
+      const newWatchList = [...watchList.entries()];
+      newWatchList.sort((a, b) => {
+        if(!imdbOrder) {
+          return b[1][0].vote_average.toFixed(1) - a[1][0].vote_average.toFixed(1);
+        }
+        return a[1][0].vote_average.toFixed(1) - b[1][0].vote_average.toFixed(1);
+      })
+      watchList = new Map(newWatchList);
+    }
+    else if(sortOpt === "Popularity") {
+      const newWatchList = [...watchList.entries()];
+      newWatchList.sort((a, b) => {
+        if(popuOrder) {
+          return b[1][0].popularity - a[1][0].popularity
+        }
+        return a[1][0].popularity - b[1][0].popularity;
+      })
+      watchList = new Map(newWatchList);
+    }
+    // console.log(sortOpt);
+    const iterator = watchList[Symbol.iterator]();
+    const res = [];
+    for (const [_, [movieObj, isMovie]] of iterator) {
+      res.push(
+        <TableRow
+          key={movieObj.id}
+          movieObj={movieObj}
+          removeFromWatchList={removeFromWatchList}
+          isMovie={isMovie}
+          searchFlag={
+            movieObj?.name?.toLowerCase().includes(debouncedText) ||
+            movieObj?.title?.toLowerCase().includes(debouncedText)
+          }
+          genreFlag={
+            genreVal === null || movieObj?.genre_ids?.some(id => genreids[id] === genreVal)
+          }
+        />
+      );
+    }
+    return res;
+  };
 
   return (
     <>
@@ -86,27 +126,31 @@ const WatchList = React.memo(() => {
         id="watchlist-search-input"
         onChange={(e) => setText(e.target.value.toLowerCase())}
       />
-      <div className="absolute top-[98px] right-[300px] text-white w-[700px] h-[390px] flex flex-col items-end">
+      <div className="absolute top-[98px] text-white right-[300px] w-[700px] h-[395px] flex flex-col items-end">
         <div 
           className="flex gap-2 items-center hoverDiv cursor-pointer"
-          onMouseEnter={() => setDisplayVal("100%")}
-          onMouseLeave={() => setDisplayVal("0")}
+          onMouseEnter={(e) => {
+            e.currentTarget.nextElementSibling.style.height = "100%";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.nextElementSibling.style.height = "0";
+          }}
         >
           <span>Genre</span>
           <i className="fa-solid fa-angle-down mt-1"></i>
         </div>
         <div
-          className="w-full ulTag flex pl-12 my-[20px]"
-          style={{height: `${displayVal}`}}
-          onMouseEnter={() => setDisplayVal("100%")}
-          onMouseLeave={() => setDisplayVal("0")}
+          className="w-full ulTag pl-12 my-[20px]"
+          style={{height: "0"}}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.height = "100%";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.height = "0";
+          }}
         >
-          <ul 
-            className="ul-Spl"
-            ref={ulRef}
-            onClick={handleClick}
-          >
-            <li><span style={{color: "gold"}} onClick={() => setGenreVal(null)}>All</span></li>
+          <ul className="ul-Spl" onClick={handleGenre}>
+            <li key="all"><span style={{color: "gold"}} onClick={() => setGenreVal(null)}>All</span></li>
             {getGenreOptions(genreids, setGenreVal)}
           </ul>
         </div>
@@ -114,55 +158,43 @@ const WatchList = React.memo(() => {
       <div className="text-white absolute top-[88px] right-[100px] p-[10px] h-[220px] flex flex-col items-end">
         <div 
           className="flex justify-center items-center hoverDiv gap-2 cursor-pointer"
-          onMouseEnter={() => setSortVal("100%")}
-          onMouseLeave={() => setSortVal("0")}
+          onMouseEnter={(e) => {
+            e.currentTarget.nextElementSibling.style.height = "100%";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.nextElementSibling.style.height = "0";
+          }}
         >
           <span>Sort by : {sortOpt}</span>
           <i className="fa-solid fa-angle-down mt-1"></i>
         </div>
         <div 
-          className="w-[120px] ulTag flex my-[20px]"
-          style={{height: `${sortVal}`}}
-          onMouseEnter={() => setSortVal("100%")}
-          onMouseLeave={() => setSortVal("0")}
+          className="w-[120px] ulTag my-[20px]"
+          style={{height: "0"}}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.height = "100%";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.height = "0";
+          }}
         >
           <ul 
-            className="cursor-pointer sort-ulTag"
-            onClick={e => {
-              const children = e.currentTarget.childNodes;
-              for(let i = 0; i < children.length; i++) {
-                if(i == 0) {
-                  children[i].style.color = "gold";
+            className="cursor-pointer sort-ulTag -mx-3 w-full"
+            onClick={handleSort}
+          >
+            <li style={{color: "gold"}} onClick={() => setSortOpt("Default")}>Default</li>
+            <li
+              onClick={() => {
+                if(sortOpt === "Title") {
+                  setTitleOrder(!titleOrder);
                 }
                 else {
-                  children[i].style.color = "white";
+                  setSortOpt("Title");
                 }
-              }
-              let prevOpt = sortOpt;
-              let sortText = e.target.textContent || e.target.parentNode.firstChild.textContent;
-              let parent = e.target.parentNode;
-              if(sortText === "Title") {
-                if(prevOpt === sortText) {
-                  setTitleOrder(prev => !prev);
-                }
-              }
-              else if(sortText === "IMDB") {
-                if(prevOpt === sortText) {
-                  setImdbOrder(prev => !prev);
-                }
-              }
-              else if(sortText === "Popularity") {
-                if(prevOpt === sortText) {
-                  setPopuOrder(prev => !prev);
-                }
-              }
-              setSortOpt(sortText);
-              parent.style.color = "red";
-            }}
-          >
-            <li style={{color: "gold"}}>Default</li>
-            <li>
-              <span>Title</span>
+              }}
+              className="flex justify-between items-center"
+            >
+              Title
               {
                 titleOrder
                   ?
@@ -171,8 +203,18 @@ const WatchList = React.memo(() => {
                 <i className="fa-solid fa-arrow-down ml-1"></i>
               }
             </li>
-            <li>
-              <span>IMDB</span>
+            <li
+              onClick={() => {
+                if(sortOpt === "IMDB") {
+                  setImdbOrder(!imdbOrder);
+                }
+                else {
+                  setSortOpt("IMDB");
+                }
+              }}
+              className="flex justify-between items-center"
+            >
+              IMDB
               {
                 imdbOrder
                   ?
@@ -181,8 +223,18 @@ const WatchList = React.memo(() => {
                 <i className="fa-solid fa-arrow-down ml-1"></i>
               }
             </li>
-            <li>
-              <span>Popularity</span>
+            <li
+              onClick={() => {
+                if(sortOpt === "Popularity") {
+                  setPopuOrder(!popuOrder);
+                }
+                else {
+                  setSortOpt("Popularity");
+                }
+              }}
+              className="flex justify-between items-center"
+            >
+              Popularity
               {
                 popuOrder
                   ?
@@ -194,6 +246,8 @@ const WatchList = React.memo(() => {
           </ul>
         </div>
       </div>
+
+
       <table className="watch-list mb-10 -mt-5">
         <thead>
           <tr className="head">
@@ -204,7 +258,7 @@ const WatchList = React.memo(() => {
             <th></th>
           </tr>
         </thead>
-        <tbody>{getTbody(watchList, removeFromWatchList, debouncedText, genreVal, genreids, sortOpt, titleOrder, imdbOrder, popuOrder)}</tbody>
+        <tbody>{getTbody()}</tbody>
       </table>
     </>
   );
@@ -212,60 +266,6 @@ const WatchList = React.memo(() => {
 
 export default WatchList;
 
-function getTbody(watchList, removeFromWatchList, text, genreVal, genreids, sortOpt, titleOrder, imdbOrder, popuOrder) { // useCallback
-  // watchList = new Map([...watchList.entries()].sort((a, b) => a[1][0].vote_average.toFixed(1) - b[1][0].vote_average.toFixed(1)))
-  if(sortOpt !== "Default") {
-    if(sortOpt === "Title") {
-      watchList = new Map(
-        [...watchList.entries()].sort(
-          (a, b) => {
-            let title1 = (a[1][0].title || a[1][0].name);
-            let title2 = (b[1][0].title || b[1][0].name);            
-            if(titleOrder) {
-              return title1.localeCompare(title2);
-            }
-            return title2.localeCompare(title1);
-          }
-        )
-      )
-    }
-    else if(sortOpt === "IMDB") {
-      watchList = new Map([...watchList.entries()].sort((a, b) => {
-        if(imdbOrder) {
-          return b[1][0].vote_average.toFixed(1) - a[1][0].vote_average.toFixed(1)
-        }
-        return a[1][0].vote_average.toFixed(1) - b[1][0].vote_average.toFixed(1);
-      }));
-    }
-    else {
-      watchList = new Map([...watchList.entries()].sort((a, b) => {
-        if(popuOrder) {
-          return b[1][0].popularity - a[1][0].popularity
-        }
-        return a[1][0].popularity - b[1][0].popularity;
-      }));
-    }
-  }
-  const iterator = watchList[Symbol.iterator]();
-  const res = [];
-  for (const [_, [movieObj, isMovie]] of iterator) {
-    const searchFlag = useMemo(() => movieObj?.name?.toLowerCase().includes(text) || movieObj?.title?.toLowerCase().includes(text), [text, movieObj]);
-    const genreFlag = useMemo(() => genreVal === null || movieObj?.genre_ids?.some(id => genreids[id] === genreVal), [genreVal, genreids, movieObj]);
-
-    res.push(
-      <TableRow
-        key={movieObj.id}
-        movieObj={movieObj}
-        removeFromWatchList={removeFromWatchList}
-        isMovie={isMovie}
-        searchFlag={searchFlag}
-        genreFlag={genreFlag}
-
-      />
-    );
-  }
-  return res;
-}
 
 function getGenreOptions(genreids, setGenreVal) { // useCallback
   const res = [];

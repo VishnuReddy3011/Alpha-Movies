@@ -4,11 +4,11 @@ import React, { useCallback, useState } from "react";
 export const MovieContext = React.createContext();
 
 const MovieContextWrapper = ({ children }) => {
+    const isEmpty = useCallback(obj => {
+        for(const _ in obj) return false;
+        return true;
+    }, [])
     const [watchList, setWatchList] = useState(() => {
-        const isEmpty = obj => {
-            for(const _ in obj) return false;
-            return true;
-        }
         const savedWatchList = JSON.parse(localStorage.getItem('watchList'));
         return !isEmpty(savedWatchList) ? new Map(savedWatchList) : new Map();
     });
@@ -82,7 +82,8 @@ const MovieContextWrapper = ({ children }) => {
                         getGenres,
                         searchText, 
                         setSearchText,
-                        genreids
+                        genreids,
+                        isEmpty
                     }
                 }
         >

@@ -88,12 +88,6 @@ table img {
     color: red !important;
   }
 }
-.sort-select {
-  background-color: inherit;
-  text-align: center;
-  /* font-weight: 700; */
-  color: gold;
-}
 
 li {
   /* background-color: lightblue; */
