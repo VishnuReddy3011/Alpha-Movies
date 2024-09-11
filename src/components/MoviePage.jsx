@@ -14,19 +14,18 @@ const MoviePage = React.memo(() => {
 	const URL_PREFIX = "https://api.themoviedb.org/3/";
 	const API_KEY = "bba723222ce35673cae76bc15ffb91c1";
 	const [pageLoader, setPageLoader] = useState(true);
-	// const isMovie = JSON.parse(localStorage.getItem("isMovie")) || false;
-	// console.log();
 	const [isMovie, setIsMovie] = useState((JSON.parse(localStorage.getItem("isMovie"))));
 	useEffect(() => {
 		axios.get(`${URL_PREFIX}${isMovie ? 'movie' : 'tv'}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=credits`)
 			.then(response => setMovieInfo(response?.data))
 			.then(() => setPageLoader(false));
 	}, [id])
-	// console.log(movieInfo);
 
-	// console.log(movie);
 	useEffect(() => {
 		window.scrollTo(0, 0)
+		document.title += " | " + movie.title || movie.name || movie.original_name || "Title";
+		document.title += " (" + (movie?.release_date?.substr(0,4) || (movie?.first_air_date?.substr(0,4) + '-' + (movieInfo?.last_air_date?.substr(0,4) || "") || "Year")) + ")";
+		return () => document.title = "Alpha Movies";
 	}, [])
 	useEffect(() => {
 		for(let i = 0; i < movieInfo?.credits?.crew?.length; i++) {
@@ -41,7 +40,6 @@ const MoviePage = React.memo(() => {
 		let castStr = "";
 		for(let i = 0; i < 5 && i < movieInfo?.credits?.cast?.length; i++) {
 			let obj = movieInfo?.credits?.cast[i];
-			// castArr.push(obj?.name);
 			castStr += obj?.name;
 			if(i < 4 && i < movieInfo?.credits?.cast?.length - 1) {
 				castStr += ",  ";
@@ -55,7 +53,6 @@ const MoviePage = React.memo(() => {
 				creatorsStr += ",  ";
 			}
 		}
-		// console.log(creatorsStr);
 		
 		setCrewInfo(prev => ({...prev, cast: castStr, creators: creatorsStr}));
 	}, [movieInfo]);
@@ -66,7 +63,6 @@ const MoviePage = React.memo(() => {
 		return hours ? `${hours}h ${mins}m` : `${mins}m`
 	}
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	// if(pageLoader) return (<div className="text-white text-4xl h-[600px] w-full flex justify-center items-center"><Loader /></div>)
   return (
 	<>
 		<div className='relative text-white movie-page'>

@@ -22,6 +22,12 @@ const WatchList = React.memo(() => {
   }, [])
 
   useEffect(() => {
+		window.scrollTo(0, 0)
+    document.title += " | Watchlist";
+		return () => document.title = "Alpha Movies";
+	}, [])
+
+  useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedText(text);
     }, 500); 
