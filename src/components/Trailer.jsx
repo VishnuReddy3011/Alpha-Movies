@@ -4,7 +4,7 @@ import './styles/trailer.css';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#root'); // Required for accessibility
+Modal.setAppElement('#root');
 
 const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
   const [trailerKey, setTrailerKey] = useState(null);
@@ -16,12 +16,6 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
   useEffect(() => {
     axios.get(`${URL_PREFIX}${isMovie ? 'movie' : 'tv'}/${movieId}/videos?api_key=${API_KEY}&language=en-US`)
         .then(response => {
-            // const trailers = response.data.results.filter(video => {
-            //   if(video?.name?.includes("Official Trailer")) return true;
-            //   return video.type === 'Trailer' && video.site === 'YouTube' && video.official === true;
-            // });
-            // console.log(response?.data?.results);
-            // setTrailerKey(() => trailers?.length > 0 ? trailers[0]?.key : null)
             let keyFound = null;
             for(const video of response?.data?.results) {
               if(video?.name?.includes("Official Trailer")) {
@@ -38,7 +32,7 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
   }, [movieId]);
   const customStyles = {
     overlay: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Makes the background 50% opaque
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     }
   };
 
@@ -54,7 +48,6 @@ const Trailer = ({ isOpen, onClose, movieId, isMovie }) => {
           height="400px"
           src={`https://www.youtube.com/embed/${trailerKey}`}
           title="Movie Trailer"
-          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>

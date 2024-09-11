@@ -1,20 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Headroom from 'react-headroom';
 import { Link, useNavigate } from "react-router-dom";
+import { MovieContext } from "../MovieContextWrapper";
 import Logo from "../assets/logo_with_glow.png";
 import './styles/navbar.css';
-import { MovieContext } from "../MovieContextWrapper";
 const NavBar = () => {
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
-  const navigate = useNavigate();  // useNavigate hook
+  const navigate = useNavigate(); 
 
-  // const [searchText, setSearchText] = useState();
   const {setSearchText} = useContext(MovieContext);
   const [temp, setTemp] = useState("");
-  // https://api.themoviedb.org/3/search/tv?query=game%20of%20thrones&api_key=bba723222ce35673cae76bc15ffb91c1
-  // https://api.themoviedb.org/3/search/movie?query=deadpool&api_key=bba723222ce35673cae76bc15ffb91c1
 
 
   const handleClickOutside = (event) => {
@@ -43,18 +40,6 @@ const NavBar = () => {
         </div>
         <div className="links">
           <Link to="/"> Movies </Link>
-          {/* <div className="dropdown">
-              <span> Genre </span>
-              <i className="fa-solid fa-angle-down mt-1"></i>
-          </div>
-          <div className="dropdown">
-              <span> Country </span>
-              <i className="fa-solid fa-angle-down mt-1"></i>
-          </div> */}
-          {/* <Link to="/movies" onClick={() => setSearchText("")}> Movies </Link> */}
-          {/* paina onclick rayu */}
-          {/* <Link to="/"> TV Series </Link>
-          <Link to="/"> Top IMDB </Link> */}
           <Link to="/watchList"> Watch List </Link>
         </div>
         <div className="login">
@@ -88,7 +73,7 @@ const NavBar = () => {
                     else {
                       setSearchText(temp);
                       setTemp("");
-                      navigate('/movies'); // Navigate to /movies page
+                      navigate('/movies');
                       setIsActive(false);
                     }
                   }

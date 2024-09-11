@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes } from "react-router-dom";
 import './App.css';
+import Loader from './Loader/Loader';
 import MovieContextWrapper from "./MovieContextWrapper";
 import Home from './components/Home';
 import MoviePage from './components/MoviePage';
@@ -11,15 +12,17 @@ import WatchList from './components/WatchList';
 
 const App = () => {
   return (
-    <MovieContextWrapper>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/watchList" element={<WatchList />} />
-        <Route path="/movies" element={<MoviesComp />} />
-        <Route path="/movie/:id" element={<MoviePage />} />
-      </Routes>
-    </MovieContextWrapper>
+    <Suspense fallback={<Loader />}>
+      <MovieContextWrapper>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/watchList" element={<WatchList />} />
+          <Route path="/movies" element={<MoviesComp />} />
+          <Route path="/movie/:id" element={<MoviePage />} />
+        </Routes>
+      </MovieContextWrapper>
+    </Suspense>
   )
 }
 

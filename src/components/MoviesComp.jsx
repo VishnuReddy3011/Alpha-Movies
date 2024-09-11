@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { MovieContext } from '../MovieContextWrapper'
 import axios from 'axios';
-import MovieCard from './home/MovieCard';
+import React, { useContext, useEffect, useState } from 'react';
 import Loader from '../Loader/Loader';
+import { MovieContext } from '../MovieContextWrapper';
+import MovieCard from './home/MovieCard';
 
 const SearchPageComponent = React.memo(({result}) => {
   const [finalResults, setFinalResults] = useState([]);
   const [movieResultsLoader, setMovieResultsLoader] = useState(true);
   const {watchList, addToWatchList, removeFromWatchList} = useContext(MovieContext);
-  // const [tvResults, setTv]
   const URL_PREFIX = "https://api.themoviedb.org/3/";
 	const API_KEY = "bba723222ce35673cae76bc15ffb91c1";
-  // console.log(result);
 
   useEffect(() => {
     setMovieResultsLoader(true);
@@ -67,7 +65,6 @@ const MoviesPageComponent = React.memo(() => {
 
 const MoviesComp = React.memo(() => {
   const {searchText} = useContext(MovieContext);
-  // console.log(searchText);
   return (
     <div className='mb-10'>
       {

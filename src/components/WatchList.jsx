@@ -24,13 +24,12 @@ const WatchList = React.memo(() => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedText(text);
-    }, 500); // Debounce time in ms
+    }, 500); 
 
-    // Cleanup timeout if the effect is called again
     return () => {
       clearTimeout(handler);
     };
-  }, [text]); // Only run the effect when `text` changes
+  }, [text]); 
 
   const handleGenre = useCallback(e => {
     const ulChildren = e.currentTarget.children;
@@ -43,9 +42,7 @@ const WatchList = React.memo(() => {
   }, [])
 
   const handleSort = useCallback(e => {
-    // console.log(e.currentTarget);
     const ulChildren = e.currentTarget.children;
-    // console.log(ulChildren);
     const text = e.target.textContent || e.target.parentNode.textContent
     for(let i = 1; i < ulChildren.length; i++) {
       if(text === ulChildren[i].textContent) {
@@ -58,7 +55,6 @@ const WatchList = React.memo(() => {
   }, []);
 
   const getTbody = () => {
-    // watchlist sort methods
     if(watchList.size === 0) {
       return;
     }
@@ -94,7 +90,6 @@ const WatchList = React.memo(() => {
       })
       watchList = new Map(newWatchList);
     }
-    // console.log(sortOpt);
     const iterator = watchList[Symbol.iterator]();
     const res = [];
     for (const [_, [movieObj, isMovie]] of iterator) {

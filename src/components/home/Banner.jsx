@@ -8,11 +8,6 @@ import Loader from '../../Loader/Loader';
 import { MovieContext } from '../../MovieContextWrapper';
 import './styles/banner.css';
 
-
-// ref={slider => {
-//     sliderRef = slider;
-//   }}
-
 const Banner = () => {
     const [movies, setMovies] = useState([]);
     const [bannerLoader, setBannerLoader] = useState(true);
@@ -140,11 +135,7 @@ function BannerSlide({movie}) {
                                 </button>
                             )
                         }
-
                     </div>
-                    {/* <button className='bg-white bg-opacity-40 drop-shadow text-white px-2 py-2 bebas-neue-regular rounded-md hover:bg-opacity-60'>
-                        <i className="fa-sharp-duotone fa-solid fa-play"></i> <span> Play Trailer</span>
-                    </button> */}
                 </div>
             </div>
 
