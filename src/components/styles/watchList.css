@@ -58,16 +58,12 @@ table img {
     outline: none;
   }
 }
-/* #watchlist-search-input::placeholder {
-  color: yellowgreen;
-} */
 
 .ul-Spl {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   padding: 0;
-  /* overflow: hidden; */
   list-style-type: none;
   margin: 20px 0px !important;
 }
@@ -76,6 +72,7 @@ table img {
   overflow: hidden;
   transition: height 1.2s ease;
   margin-top: -1px !important;
+  z-index: 999;
 }
 
 .hoverDiv {

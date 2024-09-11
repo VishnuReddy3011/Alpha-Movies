@@ -23,8 +23,8 @@ const MoviePage = React.memo(() => {
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
-		document.title += " | " + movie.title || movie.name || movie.original_name || "Title";
-		document.title += " (" + (movie?.release_date?.substr(0,4) || (movie?.first_air_date?.substr(0,4) + '-' + (movieInfo?.last_air_date?.substr(0,4) || "") || "Year")) + ")";
+		document.title += " | " + (movie.title || movie.name || movie.original_name || "Title");
+		document.title += " (" + (movie?.release_date?.substr(0,4) || ((movie?.first_air_date?.substr(0,4) + '-' + (movieInfo?.last_air_date?.substr(0,4) || "")) || "Year")) + ")";
 		return () => document.title = "Alpha Movies";
 	}, [])
 	useEffect(() => {

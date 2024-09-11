@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import Headroom from 'react-headroom';
 import { Link, useNavigate } from "react-router-dom";
 import { MovieContext } from "../MovieContextWrapper";
@@ -10,7 +10,7 @@ const NavBar = () => {
   const buttonRef = useRef(null);
   const navigate = useNavigate(); 
 
-  const {setSearchText} = useContext(MovieContext);
+  const {setSearchText, setMovieType, setIsTV} = useContext(MovieContext);
   const [temp, setTemp] = useState("");
 
 
@@ -30,6 +30,10 @@ const NavBar = () => {
     };
   }, []);
 
+  const handleType = useCallback((type, flag) => {
+    setMovieType(type);
+    setIsTV(flag);
+  }, []);
   return (
     <Headroom>
       <div className="navbar">
@@ -38,8 +42,79 @@ const NavBar = () => {
             <img src={Logo} />
           </Link>
         </div>
-        <div className="links">
-          <Link to="/"> Movies </Link>
+        <div className="links relative">
+          <Link to="/"> Home </Link>
+          
+          <div className="absolute top-[27px] left-56 h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
+            <span
+              onMouseEnter={e => {
+                e.target.nextElementSibling.style.height = "100%";
+              }}
+              onMouseLeave={e => {
+                e.target.nextElementSibling.style.height = "0";
+              }}
+            >Movies</span>
+            <div 
+              className="w-[130px] nav-ul" 
+                style={{height: "0"}}
+              onMouseEnter={e => {
+                e.currentTarget.style.height = "100%";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.height = "0";
+              }}
+            >
+              <ul className="w-full flex flex-col items-center">
+                <Link to="/movies">
+                  <li onClick={(e) => handleType("Popular", false)}>Popular</li>
+                </Link>
+                <Link to="/movies">
+                  <li onClick={(e) => handleType("Now Playing", false)}>Now Playing</li>
+                </Link>
+                <Link to="/movies">
+                  <li  onClick={(e) => handleType("Upcoming", false)}>Upcoming</li>
+                </Link>
+                <Link to="/movies">
+                  <li onClick={(e) => handleType("Top rated", false)}>Top rated</li>
+                </Link>
+              </ul>
+            </div>
+          </div>
+          <div className="absolute top-[27px] left-[330px] h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
+            <span
+              onMouseEnter={e => {
+                e.target.nextElementSibling.style.height = "100%";
+              }}
+              onMouseLeave={e => {
+                e.target.nextElementSibling.style.height = "0";
+              }}
+            >TV Shows</span>
+            <div 
+              className="w-[130px] nav-ul" 
+                style={{height: "0"}}
+              onMouseEnter={e => {
+                e.currentTarget.style.height = "100%";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.height = "0";
+              }}
+            >
+              <ul className="w-full flex flex-col items-center">
+                <Link to="/movies">
+                  <li onClick={(e) => handleType("Popular", true)}>Popular</li>
+                </Link>
+                <Link to="/movies">
+                  <li onClick={(e) => handleType("Airing Today", true)}>Airing Today</li>
+                </Link>
+                <Link to="/movies">
+                  <li  onClick={(e) => handleType("On The Air", true)}>On The Air</li>
+                </Link>
+                <Link to="/movies">
+                  <li onClick={(e) => handleType("Top rated", true)}>Top rated</li>
+                </Link>
+              </ul>
+            </div>
+          </div>
           <Link to="/watchList"> Watch List </Link>
         </div>
         <div className="login">
