@@ -126,7 +126,7 @@ const MoviesComp = React.memo(() => {
           ?
         <SearchPageComponent result={searchText}/>
           :
-        <MoviesPageComponent type={movieType || "popular"} flag={isTV}/>
+        <MoviesPageComponent type={movieType || "Popular"} flag={isTV}/>
       }
     </div>
   )

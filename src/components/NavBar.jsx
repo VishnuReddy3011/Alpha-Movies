@@ -33,6 +33,7 @@ const NavBar = () => {
   const handleType = useCallback((type, flag) => {
     setMovieType(type);
     setIsTV(flag);
+    setSearchText("");
   }, []);
   return (
     <Headroom>
@@ -45,8 +46,9 @@ const NavBar = () => {
         <div className="links relative">
           <Link to="/"> Home </Link>
           
-          <div className="absolute top-[27px] left-24 h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
+          <div className="absolute top-[27px] left-24 h-[180px] flex flex-col items-center">
             <span
+              className="cursor-pointer"
               onMouseEnter={e => {
                 e.target.nextElementSibling.style.height = "100%";
               }}
@@ -54,9 +56,10 @@ const NavBar = () => {
                 e.target.nextElementSibling.style.height = "0";
               }}
             >Movies</span>
-            <div 
-              className="w-[130px] nav-ul" 
-                style={{height: "0"}}
+
+            <ul 
+              className="w-[130px] nav-ul"
+              style={{height: "0"}}
               onMouseEnter={e => {
                 e.currentTarget.style.height = "100%";
               }}
@@ -64,24 +67,23 @@ const NavBar = () => {
                 e.currentTarget.style.height = "0";
               }}
             >
-              <ul className="w-full flex flex-col items-center">
-                <Link to="/movies">
-                  <li onClick={(e) => handleType("Popular", false)}>Popular</li>
-                </Link>
-                <Link to="/movies">
-                  <li onClick={(e) => handleType("Now Playing", false)}>Now Playing</li>
-                </Link>
-                <Link to="/movies">
-                  <li  onClick={(e) => handleType("Upcoming", false)}>Upcoming</li>
-                </Link>
-                <Link to="/movies">
-                  <li onClick={(e) => handleType("Top rated", false)}>Top rated</li>
-                </Link>
-              </ul>
-            </div>
+              <Link to="/movies">
+                <li onClick={(e) => handleType("Popular", false)}>Popular</li>
+              </Link>
+              <Link to="/movies">
+                <li onClick={(e) => handleType("Now Playing", false)}>Now Playing</li>
+              </Link>
+              <Link to="/movies">
+                <li  onClick={(e) => handleType("Upcoming", false)}>Upcoming</li>
+              </Link>
+              <Link to="/movies">
+                <li onClick={(e) => handleType("Top rated", false)}>Top rated</li>
+              </Link>
+            </ul>
           </div>
-          <div className="absolute top-[27px] left-52 h-[180px] flex flex-col items-center cursor-pointer" onClick={() => setSearchText("")}>
+          <div className="absolute top-[27px] left-52 h-[180px] flex flex-col items-center">
             <span
+              className="cursor-pointer"
               onMouseEnter={e => {
                 e.target.nextElementSibling.style.height = "100%";
               }}
@@ -89,9 +91,10 @@ const NavBar = () => {
                 e.target.nextElementSibling.style.height = "0";
               }}
             >TV Shows</span>
-            <div 
+
+            <ul 
               className="w-[130px] nav-ul" 
-                style={{height: "0"}}
+              style={{height: "0"}}
               onMouseEnter={e => {
                 e.currentTarget.style.height = "100%";
               }}
@@ -99,21 +102,19 @@ const NavBar = () => {
                 e.currentTarget.style.height = "0";
               }}
             >
-              <ul className="w-full flex flex-col items-center">
-                <Link to="/movies">
-                  <li onClick={(e) => handleType("Popular", true)}>Popular</li>
-                </Link>
-                <Link to="/movies">
-                  <li onClick={(e) => handleType("Airing Today", true)}>Airing Today</li>
-                </Link>
-                <Link to="/movies">
-                  <li  onClick={(e) => handleType("On The Air", true)}>On The Air</li>
-                </Link>
-                <Link to="/movies">
-                  <li onClick={(e) => handleType("Top rated", true)}>Top rated</li>
-                </Link>
-              </ul>
-            </div>
+              <Link to="/movies">
+                <li onClick={(e) => handleType("Popular", true)}>Popular</li>
+              </Link>
+              <Link to="/movies">
+                <li onClick={(e) => handleType("Airing Today", true)}>Airing Today</li>
+              </Link>
+              <Link to="/movies">
+                <li  onClick={(e) => handleType("On The Air", true)}>On The Air</li>
+              </Link>
+              <Link to="/movies">
+                <li onClick={(e) => handleType("Top rated", true)}>Top rated</li>
+              </Link>
+            </ul>
           </div>
           <div className="absolute top-[25px] left-[355px] w-max">
             <Link to="/watchList"> Watch List </Link>
@@ -150,13 +151,13 @@ const NavBar = () => {
                     else {
                       setSearchText(temp);
                       setTemp("");
-                      navigate('/movies');
+                      navigate('/search');
                       setIsActive(false);
                     }
                   }
                 }}
               />
-              <Link to='/movies'>
+              <Link to='/search'>
                 <i 
                   className={`fa-sharp-duotone fa-solid fa-magnifying-glass text-base search-icon ${isActive ? 'active' : 'not-active'}`}
                   onClick={(e) => {

@@ -9,7 +9,7 @@ const Movies = React.memo(({movies, pageNo, handleNext, handlePrevious, setPageN
   const { watchList, addToWatchList, removeFromWatchList } = useContext(MovieContext);
   return (
     <div>
-      <div className="text-white text-3xl font-bold text-center m-5 my-10">{title}</div>
+      {title && (<div className="text-white text-3xl font-bold text-center m-5 my-10">{title}</div>)}
       {
         loader ? (<div className="text-white text-4xl h-[600px] w-full flex justify-center items-center"><Loader /></div>)
           :
@@ -23,19 +23,25 @@ const Movies = React.memo(({movies, pageNo, handleNext, handlePrevious, setPageN
                   addToWatchList={addToWatchList}
                   removeFromWatchList={removeFromWatchList}
                   watchList={watchList}
-                  isMovie={isMovie}
+                  isMovie={isMovie !== undefined ? isMovie : movieObj.isMovie}
                 />
               );
             })
           }
         </div>)
       }
-      <Pagination
-        pageNo={pageNo}
-        handleNext={handleNext}
-        handlePrevious={handlePrevious}
-        setPageNo={setPageNo}
-      />
+      {
+        pageNo
+          &&
+        (
+          <Pagination
+            pageNo={pageNo}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            setPageNo={setPageNo}
+          />
+        )
+      }
     </div>
   );
 });

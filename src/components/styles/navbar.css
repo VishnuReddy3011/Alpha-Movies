@@ -111,12 +111,12 @@
     background-color: #373942;
     overflow: hidden;
     transition: height 1.2s ease;
-    ul {
-        padding-left: 0 !important;
-        li {
-            &:hover {
-                color: red;
-            }
+    padding-left: 0 !important;
+    li {
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+            color: red;
         }
     }
 }

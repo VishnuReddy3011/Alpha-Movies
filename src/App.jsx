@@ -8,6 +8,7 @@ import MoviePage from './components/MoviePage';
 import MoviesComp from './components/MoviesComp';
 import NavBar from './components/NavBar';
 import WatchList from './components/WatchList';
+import SearchList from './components/SearchList';
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/watchList" element={<WatchList />} />
+          <Route path="/search" element={<SearchList />} />
           <Route path="/movies" element={<MoviesComp />} />
           <Route path="/movie/:id" element={<MoviePage />} />
         </Routes>
