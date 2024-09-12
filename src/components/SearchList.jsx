@@ -9,9 +9,10 @@ const API_KEY = "bba723222ce35673cae76bc15ffb91c1";
 const SearchList = React.memo(() => {
   const [finalResults, setFinalResults] = useState([]);
   const [movieResultsLoader, setMovieResultsLoader] = useState(true);
-  const {searchText} = useContext(MovieContext);
+  const {searchText, setSearchText} = useContext(MovieContext);
 
   useEffect(() => {
+    setMovieResultsLoader(true);
     const fetchMoviesAndTV = async () => {
       try {
         const movieResponse = await axios.get(`${URL_PREFIX}search/movie?query=${searchText}&api_key=${API_KEY}`);
@@ -34,7 +35,28 @@ const SearchList = React.memo(() => {
   }, [searchText]);
   
 
+  const [temp, setTemp] = useState("");
   if(movieResultsLoader) return <div className="text-white text-4xl h-screen w-screen flex justify-center items-center"><Loader /></div>
+  if(!searchText) {
+    return (
+      <div className='text-white mx-[400px] my-5 flex gap-5 items-center'>
+        <label htmlFor="search">Search Movie or TV Show :</label>
+        <input
+          className='p-1 text-white font-semibold rounded-md'
+          style={{backgroundColor: "rgb(58, 75, 58)", border: "1px solid greenyellow"}}
+          type="text" 
+          placeholder='Eg: Kalki' 
+          value={temp} 
+          onChange={e => setTemp(e.target.value)} 
+          onKeyDown={e => {
+            if(e.key === "Enter") {
+              setSearchText(temp);
+            }
+          }}
+        />
+      </div>
+    )
+  }
   return (
     <div>
       <div className='h-16 p-4 text-3xl mb-4 text-white drop-shadow'>{finalResults.length ? 'Search results' : 'No results available'} for: "{searchText}"</div>
