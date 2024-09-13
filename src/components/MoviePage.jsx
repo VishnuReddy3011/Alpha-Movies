@@ -75,7 +75,7 @@ const MoviePage = React.memo(() => {
 					<div className="flex-1">
 						<img
 							className='w-[304px] m-10 rounded-xl'
-							src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} 
+							src={`https://image.tmdb.org/t/p/original/${movie?.poster_path || movie?.backdrop_path}`} 
 							alt="" 
 						/>
 					</div>
@@ -97,7 +97,7 @@ const MoviePage = React.memo(() => {
 									</a>
 									<ul 
 										style={{ listStyleType: 'disc', margin: "0px" }}
-										className='flex gap-6 opacity-80 small-txt'
+										className='flex gap-6 opacity-80 small-txt pl-5'
 									>
 										<li>{new Date(movie?.release_date || movie?.first_air_date).toString().substring(3, 15) || "N/A"} ({movieInfo?.origin_country[0]})</li>
 										<li>{getGenres(movie?.genre_ids)}</li>

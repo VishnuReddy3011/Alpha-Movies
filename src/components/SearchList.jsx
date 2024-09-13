@@ -42,10 +42,10 @@ const SearchList = React.memo(() => {
       <div className='text-white mx-[400px] my-5 flex gap-5 items-center'>
         <label htmlFor="search">Search Movie or TV Show :</label>
         <input
-          className='p-1 text-white font-semibold rounded-md'
+          className='px-2 py-1 text-white font-semibold rounded-md'
           style={{
             backgroundColor: "rgb(58, 75, 58)", 
-            border: "1px solid greenyellow",
+            border: "1px solid rgb(251, 255, 0)",
           }}
           type="text" 
           placeholder='Eg: Kalki' 

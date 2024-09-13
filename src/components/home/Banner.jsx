@@ -99,7 +99,7 @@ function BannerSlide({movie}) {
                 <div className='flex justify-start items-center gap-2 text-lg '>
                     <div className="info-container relative">
                         <div className='absolute w-max -top-11 -left-3 info'>More info</div>
-                        <Link to={`/movie/${movie.id}`} >
+                        <Link to={`/movie/${movie.id}-${(movie.title || movie.name).replaceAll(/\s/g,'-')}`} >
                             <div 
                                 className="bg-white bg-opacity-10 drop-shadow text-white px-7 py-2 hover:bg-opacity-20"
                                 onClick={() => {

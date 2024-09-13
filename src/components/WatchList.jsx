@@ -60,6 +60,8 @@ const WatchList = React.memo(() => {
     }
   }, []);
 
+  const handleSortClick = (callback, text) => sortOpt === text ? callback(prev => !prev) : setSortOpt(text);
+
   const getTbody = () => {
     if(watchList.size === 0) {
       return;
@@ -127,11 +129,11 @@ const WatchList = React.memo(() => {
         id="watchlist-search-input"
         onChange={(e) => setText(e.target.value.toLowerCase())}
       />
-      <div className="absolute top-[98px] text-white right-[300px] w-[700px] h-[395px] flex flex-col items-end">
+      <div className="absolute top-[98px] text-white w-[100px] right-[300px] flex flex-col items-end">
         <div 
           className="flex gap-2 items-center hoverDiv cursor-pointer"
           onMouseEnter={(e) => {
-            e.currentTarget.nextElementSibling.style.height = "100%";
+            e.currentTarget.nextElementSibling.style.height = "298px";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.nextElementSibling.style.height = "0";
@@ -140,27 +142,27 @@ const WatchList = React.memo(() => {
           <span>Genre</span>
           <i className="fa-solid fa-angle-down mt-1"></i>
         </div>
-        <div
-          className="w-full ulTag pl-12 my-[20px]"
+        <ul 
+          className="ul-Spl ulTag" 
           style={{height: "0"}}
           onMouseEnter={(e) => {
-            e.currentTarget.style.height = "100%";
+            e.currentTarget.style.height = "298px";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.height = "0";
           }}
+          onClick={handleGenre}
         >
-          <ul className="ul-Spl" onClick={handleGenre}>
-            <li key="all"><span style={{color: "gold"}} onClick={() => setGenreVal(null)}>All</span></li>
-            {getGenreOptions(genreids, setGenreVal)}
-          </ul>
-        </div>
+          <li key="all"><span style={{color: "gold"}} onClick={() => setGenreVal(null)}>All</span></li>
+          {getGenreOptions(genreids, setGenreVal)}
+        </ul>
+
       </div>
-      <div className="text-white absolute top-[88px] right-[100px] p-[10px] h-[220px] flex flex-col items-end">
+      <div className="text-white absolute top-[88px] right-[100px] p-[10px] flex flex-col items-end">
         <div 
           className="flex justify-center items-center hoverDiv gap-2 cursor-pointer"
           onMouseEnter={(e) => {
-            e.currentTarget.nextElementSibling.style.height = "100%";
+            e.currentTarget.nextElementSibling.style.height = "135px";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.nextElementSibling.style.height = "0";
@@ -169,83 +171,31 @@ const WatchList = React.memo(() => {
           <span>Sort by : {sortOpt}</span>
           <i className="fa-solid fa-angle-down mt-1"></i>
         </div>
-        <div 
-          className="w-[120px] ulTag my-[20px]"
+        <ul 
+          className="sort-ulTag ulTag my-[20px]"
+          onClick={handleSort}
           style={{height: "0"}}
           onMouseEnter={(e) => {
-            e.currentTarget.style.height = "100%";
+            e.currentTarget.style.height = "135px";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.height = "0";
           }}
         >
-          <ul 
-            className="cursor-pointer sort-ulTag -mx-3 w-full"
-            onClick={handleSort}
-          >
-            <li style={{color: "gold"}} onClick={() => setSortOpt("Default")}>Default</li>
-            <li
-              onClick={() => {
-                if(sortOpt === "Title") {
-                  setTitleOrder(!titleOrder);
-                }
-                else {
-                  setSortOpt("Title");
-                }
-              }}
-              className="flex justify-between items-center"
-            >
-              Title
-              {
-                titleOrder
-                  ?
-                <i className="fa-solid fa-arrow-up ml-1"></i>
-                  :
-                <i className="fa-solid fa-arrow-down ml-1"></i>
-              }
-            </li>
-            <li
-              onClick={() => {
-                if(sortOpt === "IMDB") {
-                  setImdbOrder(!imdbOrder);
-                }
-                else {
-                  setSortOpt("IMDB");
-                }
-              }}
-              className="flex justify-between items-center"
-            >
-              IMDB
-              {
-                imdbOrder
-                  ?
-                <i className="fa-solid fa-arrow-up ml-1"></i>
-                  :
-                <i className="fa-solid fa-arrow-down ml-1"></i>
-              }
-            </li>
-            <li
-              onClick={() => {
-                if(sortOpt === "Popularity") {
-                  setPopuOrder(!popuOrder);
-                }
-                else {
-                  setSortOpt("Popularity");
-                }
-              }}
-              className="flex justify-between items-center"
-            >
-              Popularity
-              {
-                popuOrder
-                  ?
-                <i className="fa-solid fa-arrow-up ml-1"></i>
-                  :
-                <i className="fa-solid fa-arrow-down ml-1"></i>
-              }
-            </li>
-          </ul>
-        </div>
+          <li style={{color: "gold"}} onClick={() => setSortOpt("Default")}>Default</li>
+          <li onClick={() => handleSortClick(setTitleOrder, "Title")}>
+            Title
+            <i className={`fa-solid fa-arrow-${titleOrder ? "up" : "down"}`}></i>
+          </li>
+          <li onClick={() => handleSortClick(setImdbOrder, "IMDB")}>
+            IMDB
+            <i className={`fa-solid fa-arrow-${imdbOrder ? "up" : "down"}`}></i>
+          </li>
+          <li onClick={() => handleSortClick(setPopuOrder, "Popularity")}>
+            Popularity
+            <i className={`fa-solid fa-arrow-${popuOrder ? "up" : "down"}`}></i>
+          </li>
+        </ul>
       </div>
 
 

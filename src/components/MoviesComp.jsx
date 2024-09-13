@@ -43,7 +43,7 @@ const MoviesComp = React.memo(() => {
         handleNext={handleNext} 
         handlePrevious={handlePrevious} 
         setPageNo={setPage}
-        isMove={!isTV}
+        isMovie={!isTV}
       />
     </div>
   )

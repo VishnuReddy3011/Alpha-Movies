@@ -80,7 +80,8 @@
     border-radius: 8px;
     background-color: rgb(58, 75, 58);
     /* background-color: rgb(75, 58, 58); */
-    border: 1px solid greenyellow;
+    /* border: 1px solid greenyellow; */
+    border: 1px solid rgb(251, 255, 0);
     /* border: 1px solid rgb(255, 47, 47); */
     input {
         background-color: inherit;

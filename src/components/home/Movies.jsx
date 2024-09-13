@@ -23,7 +23,7 @@ const Movies = React.memo(({movies, pageNo, handleNext, handlePrevious, setPageN
                   addToWatchList={addToWatchList}
                   removeFromWatchList={removeFromWatchList}
                   watchList={watchList}
-                  isMovie={isMovie !== undefined ? isMovie : movieObj.isMovie}
+                  isMovie={isMovie !== undefined ? isMovie : movieObj?.isMovie}
                 />
               );
             })

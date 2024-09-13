@@ -45,7 +45,6 @@ const NavBar = () => {
         </div>
         <div className="links relative">
           <Link to="/"> Home </Link>
-          
           <div className="absolute top-[27px] left-24 flex flex-col items-center">
             <span
               className="cursor-pointer"
@@ -118,6 +117,10 @@ const NavBar = () => {
           </div>
           <div className="absolute top-[25px] left-[355px] w-max">
             <Link to="/watchList"> Watch List </Link>
+          </div>
+          <div>
+            <span></span>
+            <ul></ul>
           </div>
         </div>
         <div className="login">
