@@ -43,16 +43,16 @@ const SearchList = React.memo(() => {
         <label htmlFor="search">Search Movie or TV Show :</label>
         <input
           className='p-1 text-white font-semibold rounded-md'
-          style={{backgroundColor: "rgb(58, 75, 58)", border: "1px solid greenyellow"}}
+          style={{
+            backgroundColor: "rgb(58, 75, 58)", 
+            border: "1px solid greenyellow",
+          }}
           type="text" 
           placeholder='Eg: Kalki' 
           value={temp} 
           onChange={e => setTemp(e.target.value)} 
-          onKeyDown={e => {
-            if(e.key === "Enter") {
-              setSearchText(temp);
-            }
-          }}
+          onKeyDown={e => e.key === "Enter" && setSearchText(temp)}
+          onFocus={e => e.target.style.outline = "none"}
         />
       </div>
     )
