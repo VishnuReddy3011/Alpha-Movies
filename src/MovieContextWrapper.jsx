@@ -71,6 +71,7 @@ const MovieContextWrapper = ({ children }) => {
     const [searchText, setSearchText] = useState("");
     const [movieType, setMovieType] = useState("");
     const [isTV, setIsTV] = useState(false);
+    
 
     // 2. create a provider where you will add state and function information
     return (

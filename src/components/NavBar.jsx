@@ -9,10 +9,9 @@ const NavBar = () => {
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const navigate = useNavigate(); 
-
-  const {setSearchText, setMovieType, setIsTV} = useContext(MovieContext);
+  const [genreSet, setGenreSet] = useState(new Set());
+  const {setSearchText, setMovieType, setIsTV, genreids} = useContext(MovieContext);
   const [temp, setTemp] = useState("");
-
 
   const handleClickOutside = (event) => {
     if (
@@ -35,6 +34,43 @@ const NavBar = () => {
     setIsTV(flag);
     setSearchText("");
   }, []);
+
+  const getCheckBoxes = useCallback(() => {
+    const res = [];
+    for(const key in genreids) {
+      res.push (
+        <li key={key} className="g-box">
+          <input 
+            type="checkbox" 
+            id={key} 
+            value={key} 
+            name={key}
+            onChange={e => {
+              if(e.target.checked) {
+                setGenreSet(prev => {
+                  const st = new Set(prev);
+                  st.add(e.target.value);
+                  return st;
+                })
+              }
+              else {
+                setGenreSet(prev => {
+                  const st = new Set(prev);
+                  st.delete(e.target.value);
+                  return st;
+                })
+              }
+            }} 
+          />
+          <label htmlFor={key} className="cursor-pointer">
+            {genreids[key]}
+          </label>
+        </li>
+      )
+    }
+    return res;
+  }, [])
+
   return (
     <Headroom>
       <div className="navbar">
@@ -115,12 +151,42 @@ const NavBar = () => {
               </Link>
             </ul>
           </div>
-          <div className="absolute top-[25px] left-[355px] w-max">
+          <div className="absolute top-[25px] left-[468px] w-max">
             <Link to="/watchList"> Watch List </Link>
           </div>
-          <div>
-            <span></span>
-            <ul></ul>
+          <div className="absolute top-[27px] text-white w-[100px] left-[340px] flex flex-col items-center">
+            <div 
+              className="flex gap-2 items-center cursor-pointer"
+              onMouseEnter={(e) => {
+                e.currentTarget.nextElementSibling.style.height = "340px";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.nextElementSibling.style.height = "0";
+              }}
+            >
+              <span>Genre</span>
+              <i className="fa-solid fa-angle-down mt-1"></i>
+            </div>
+            <ul 
+              className="ul-Spl ulTag genre-cbs" 
+              style={{height: "0"}}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.height = "340px";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.height = "0";
+              }}
+            >
+              {getCheckBoxes()}
+              <li className="g-box srch">
+                <Link to={`/genre/${[...genreSet].join('|')}`} onClick={e => {
+                  if(genreSet.size === 0) {
+                    e.preventDefault();
+                  }
+                }}>Search</Link>
+              </li>
+              <li className="g-box">hjhj</li>
+            </ul>
           </div>
         </div>
         <div className="login">

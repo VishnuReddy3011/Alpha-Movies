@@ -15,7 +15,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        /* background-color: #F5F5DC; */
         background-color: white;
         img {
             padding: 5px;
@@ -111,7 +110,7 @@
     font-weight: 300;
     background-color: #373942;
     overflow: hidden;
-    transition: height 1.2s ease;
+    transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
     padding-left: 0 !important;
     li {
         text-align: center;
@@ -119,5 +118,30 @@
         &:hover {
             color: red;
         }
+    }
+}
+
+.genre-cbs {
+    font-weight: 300;
+    overflow: hidden;
+    .g-box {
+        width: max-content;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        input {
+            margin-top: 3px;
+            accent-color: yellow;
+        }
+
+    }
+    .g-box.srch {
+        color: yellow;
+        border: 1px solid white;
+        border-radius: 8px;
+        padding-top: 0 !important;
+        padding-bottom: 2px !important;
+        padding-left: 2px !important;
+        padding-right: 2px !important;
     }
 }

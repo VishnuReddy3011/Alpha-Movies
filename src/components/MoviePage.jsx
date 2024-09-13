@@ -14,7 +14,7 @@ const MoviePage = React.memo(() => {
 	const URL_PREFIX = "https://api.themoviedb.org/3/";
 	const API_KEY = "bba723222ce35673cae76bc15ffb91c1";
 	const [pageLoader, setPageLoader] = useState(true);
-	const [isMovie, setIsMovie] = useState((JSON.parse(localStorage.getItem("isMovie"))));
+	const [isMovie, setIsMovie]= useState((JSON.parse(localStorage.getItem("isMovie"))));
 	useEffect(() => {
 		axios.get(`${URL_PREFIX}${isMovie ? 'movie' : 'tv'}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=credits`)
 			.then(response => setMovieInfo(response?.data))
