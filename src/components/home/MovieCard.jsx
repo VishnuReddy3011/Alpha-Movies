@@ -17,12 +17,6 @@ const MovieCard = React.memo(
               localStorage.setItem("isMovie", JSON.stringify(isMovie));
             }
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.zIndex = "1";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.zIndex = "0";
-          }}
         >
           <div className="absolute h-full w-full rounded-xl selection flex flex-col justify-between items-end ">
             {!watchList.has(movie.id) ? (

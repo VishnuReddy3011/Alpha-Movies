@@ -46,11 +46,11 @@ const NavBar = () => {
         <div className="links relative">
           <Link to="/"> Home </Link>
           
-          <div className="absolute top-[27px] left-24 h-[180px] flex flex-col items-center">
+          <div className="absolute top-[27px] left-24 flex flex-col items-center">
             <span
               className="cursor-pointer"
               onMouseEnter={e => {
-                e.target.nextElementSibling.style.height = "100%";
+                e.target.nextElementSibling.style.height = "150px";
               }}
               onMouseLeave={e => {
                 e.target.nextElementSibling.style.height = "0";
@@ -61,7 +61,7 @@ const NavBar = () => {
               className="w-[130px] nav-ul"
               style={{height: "0"}}
               onMouseEnter={e => {
-                e.currentTarget.style.height = "100%";
+                e.currentTarget.style.height = "150px";
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.height = "0";
@@ -81,11 +81,11 @@ const NavBar = () => {
               </Link>
             </ul>
           </div>
-          <div className="absolute top-[27px] left-52 h-[180px] flex flex-col items-center">
+          <div className="absolute top-[27px] left-52 flex flex-col items-center">
             <span
               className="cursor-pointer"
               onMouseEnter={e => {
-                e.target.nextElementSibling.style.height = "100%";
+                e.target.nextElementSibling.style.height = "150px";
               }}
               onMouseLeave={e => {
                 e.target.nextElementSibling.style.height = "0";
@@ -96,7 +96,7 @@ const NavBar = () => {
               className="w-[130px] nav-ul" 
               style={{height: "0"}}
               onMouseEnter={e => {
-                e.currentTarget.style.height = "100%";
+                e.currentTarget.style.height = "150px";
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.height = "0";
