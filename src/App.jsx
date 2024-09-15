@@ -10,6 +10,7 @@ import MoviesComp from './components/MoviesComp';
 import NavBar from './components/NavBar';
 import SearchList from './components/SearchList';
 import WatchList from './components/WatchList';
+import CountryList from './components/CountryList';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/movies" element={<MoviesComp />} />
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/genre/:id" element={<GenreList />} />
+          <Route path="/country/:id" element={<CountryList />} />
         </Routes>
       </MovieContextWrapper>
     </Suspense>

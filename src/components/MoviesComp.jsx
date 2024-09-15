@@ -17,8 +17,16 @@ const MoviesComp = React.memo(() => {
   useEffect(() => {
     const fetchMoviesAndTV = async () => {
       try {
-        const movieResponse = await axios.get(`${URL_PREFIX}${isTV ? "tv" : "movie"}/${movieType.toLowerCase().split(" ").join("_") || "popular"}?api_key=${API_KEY}&language=en-US&page=${page}`);
-        setTypeMovies(movieResponse?.data?.results);
+        const movieResponse = await axios.get(`${URL_PREFIX}${isTV ? "tv" : "movie"}/${movieType.toLowerCase().split(" ").join("_") || "popular"}?api_key=${API_KEY}&sort_by=popularity.desc&language=en-US&page=${page}`);
+        const upRes = await axios.get(`${URL_PREFIX}discover/movie?api_key=${API_KEY}&primary_release_date.gte=${new Date().toISOString().substring(0,10)}&sort_by=popularity.desc&language=en-US&page=${page}`);
+        if(movieType === "Upcoming") {
+          // console.log(upRes.data.results);
+          setTypeMovies(upRes?.data?.results);
+        }
+        else {
+          setTypeMovies(movieResponse?.data?.results);
+        }
+        
       } catch (error) {
         console.log(error);
       } finally {
@@ -27,6 +35,10 @@ const MoviesComp = React.memo(() => {
     };
     fetchMoviesAndTV();
   }, [movieType, page, isTV])
+
+  if(movieType === "Upcoming") {
+    console.log(typeMovies);
+  }
 
   const handleNext = useCallback(setPage => setPage(prev => prev+1), []);
 	const handlePrevious = useCallback(setPage => setPage(prev => prev > 1 ? prev-1 : prev), []);

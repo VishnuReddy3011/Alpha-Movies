@@ -110,7 +110,7 @@
     font-weight: 300;
     background-color: #373942;
     overflow: hidden;
-    transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     padding-left: 0 !important;
     li {
         text-align: center;

@@ -10,7 +10,7 @@ const MovieCard = React.memo(
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path || movie.backdrop_path})`,
           }}
-          className="h-[40vh] md:w-[200px] bg-center bg-cover rounded-xl hover:scale-110 duration-300 hover:cursor-pointer movie-card"
+          className="bg-center bg-cover rounded-xl hover:scale-110 duration-300 cursor-pointer movie-card"
           onClick={(e) => {
             if(!e.target.classList.contains("watch-list-add")) {
               localStorage.setItem("singleMovie", JSON.stringify(movie));
@@ -21,7 +21,7 @@ const MovieCard = React.memo(
           <div className="absolute h-full w-full rounded-xl selection flex flex-col justify-between items-end ">
             {!watchList.has(movie.id) ? (
               <div
-                className="watch-list-add m-4 flex justify-center h-8 w-8 items-center rounded-lg bg-gray-900/60"
+                className="watch-list m-[10%] flex justify-center h-[15%] w-[20%] items-center rounded-lg bg-gray-900/60"
                 onClick={(e) => {
                   e.preventDefault();
                   addToWatchList(movie, isMovie);
@@ -31,18 +31,18 @@ const MovieCard = React.memo(
               </div>
             ) : (
               <div
-                className="watch-list m-4 flex justify-center h-8 w-8 items-center rounded-lg bg-gray-900/60"
+                className="watch-list m-[10%] flex justify-center h-[15%] w-[20%] items-center rounded-lg bg-gray-900/60"
                 onClick={(e) => {
                   e.preventDefault();
                   removeFromWatchList(movie);
                 }}
               >
-                <i className="fa-solid fa-check text-white"></i>
+                <i className="fa-solid fa-check text-white watch-list-add"></i>
               </div>
             )}
-            <div className="text-white w-full text-center text-xl p-2 bg-gray-900/70 rounded-b-xl title">
+            {/* <div className="text-white w-full text-center p-2 bg-gray-900/70 rounded-b-xl title">
               {movie.title || movie.name}
-            </div>
+            </div> */}
           </div>
         </div>
       </Link>

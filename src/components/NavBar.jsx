@@ -10,7 +10,7 @@ const NavBar = () => {
   const buttonRef = useRef(null);
   const navigate = useNavigate(); 
   const [genreSet, setGenreSet] = useState(new Set());
-  const {setSearchText, setMovieType, setIsTV, genreids} = useContext(MovieContext);
+  const {setSearchText, setMovieType, setIsTV, genreids, countries} = useContext(MovieContext);
   const [temp, setTemp] = useState("");
 
   const handleClickOutside = (event) => {
@@ -151,7 +151,7 @@ const NavBar = () => {
               </Link>
             </ul>
           </div>
-          <div className="absolute top-[25px] left-[468px] w-max">
+          <div className="absolute top-[25px] left-[608px] w-max">
             <Link to="/watchList"> Watch List </Link>
           </div>
           <div className="absolute top-[27px] text-white w-[100px] left-[340px] flex flex-col items-center">
@@ -186,6 +186,39 @@ const NavBar = () => {
                 }}>Search</Link>
               </li>
               <li className="g-box">hjhj</li>
+            </ul>
+          </div>
+          <div className="absolute top-[27px] text-white w-[100px] left-[470px] flex flex-col items-center">
+            <div 
+              className="flex gap-2 items-center cursor-pointer"
+              onMouseEnter={(e) => {
+                e.currentTarget.nextElementSibling.style.height = "420px";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.nextElementSibling.style.height = "0";
+              }}
+            >
+              <span>Country</span>
+              <i className="fa-solid fa-angle-down mt-1"></i>
+            </div>
+            <ul
+              className="ul-Spl ulTag genre-cbs"
+              style={{height: "0"}}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.height = "420px";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.height = "0";
+              }}
+            >
+              {countries.map(item => {
+                return (
+                  <Link to={`/country/${item.id}`} key={item.id}>
+                    <li className="cursor-pointer">{item.name}</li>
+                  </Link>
+                )
+              })}
+              <li>kdsjh</li>
             </ul>
           </div>
         </div>

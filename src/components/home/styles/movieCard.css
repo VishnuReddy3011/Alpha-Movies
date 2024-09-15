@@ -4,9 +4,11 @@
 
 .movie-card {
     position: relative;
+    width: calc((76vw - 20px) / 6);
+    aspect-ratio: 3/4;
     &:hover {
         border: 3px solid blue;
-        background-color: blue;
+        background-color: rgb(53, 53, 252, 0.8);
         /* .title {
             background-color: rgb(43, 47, 107, 0.4);
             color: gold;
@@ -14,5 +16,23 @@
         .selection {
             background-color: rgb(34, 0, 255, 0.1);
         }
+    }
+    .watch-list-add {
+        font-size: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .movie-card {
+        width: calc(84vw / 4);
+        aspect-ratio: 3/4;
+    }
+    .watch-list {
+        width: 20px !important;
+        height: 20px !important;
+        border-radius: 5px !important;
+    }
+    .watch-list-add {
+        font-size: 5px !important;
     }
 }

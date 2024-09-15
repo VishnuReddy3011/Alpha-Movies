@@ -63,6 +63,7 @@ const MoviePage = React.memo(() => {
 		return hours ? `${hours}h ${mins}m` : `${mins}m`
 	}
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	console.log(movieInfo);
   return (
 	<>
 		<div className='relative text-white movie-page'>

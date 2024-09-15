@@ -58,6 +58,46 @@ const MovieContextWrapper = ({ children }) => {
         10767: "Talk",
         10768: "War & Politics",
     };
+
+    const countries = 
+        [
+            { id: 'AR', name: 'Argentina' },
+            { id: 'AU', name: 'Australia' },
+            { id: 'AT', name: 'Austria' },
+            { id: 'BE', name: 'Belgium' },
+            { id: 'BR', name: 'Brazil' },
+            { id: 'CA', name: 'Canada' },
+            { id: 'CN', name: 'China' },
+            { id: 'CZ', name: 'Czech Republic' },
+            { id: 'DK', name: 'Denmark' },
+            { id: 'FI', name: 'Finland' },
+            { id: 'FR', name: 'France' },
+            { id: 'DE', name: 'Germany' },
+            { id: 'HK', name: 'Hong Kong' },
+            { id: 'HU', name: 'Hungary' },
+            { id: 'IN', name: 'India' },
+            { id: 'IE', name: 'Ireland' },
+            { id: 'IL', name: 'Israel' },
+            { id: 'IT', name: 'Italy' },
+            { id: 'JP', name: 'Japan' },
+            { id: 'LU', name: 'Luxembourg' },
+            { id: 'MX', name: 'Mexico' },
+            { id: 'NL', name: 'Netherlands' },
+            { id: 'NZ', name: 'New Zealand' },
+            { id: 'NO', name: 'Norway' },
+            { id: 'PL', name: 'Poland' },
+            { id: 'RO', name: 'Romania' },
+            { id: 'RU', name: 'Russia' },
+            { id: 'ZA', name: 'South Africa' },
+            { id: 'KR', name: 'South Korea' },
+            { id: 'ES', name: 'Spain' },
+            { id: 'SE', name: 'Sweden' },
+            { id: 'CH', name: 'Switzerland' },
+            { id: 'TW', name: 'Taiwan' },
+            { id: 'TH', name: 'Thailand' },
+            { id: 'GB', name: 'United Kingdom' },
+            { id: 'US', name: 'United States of America' }
+        ]
       
     function getGenres(arr) {
         let genres = "", i = 0;
@@ -90,7 +130,8 @@ const MovieContextWrapper = ({ children }) => {
                         movieType, 
                         setMovieType,
                         isTV,
-                        setIsTV
+                        setIsTV,
+                        countries
                     }
                 }
         >

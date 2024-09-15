@@ -37,6 +37,11 @@ const GenreList = React.memo(() => {
   return (
     <div className='text-white'>
 			<div className="mvs">
+				{/* <div className="btns flex p-7">
+					<div className='text-3xl mr-4'>Genre results in</div>
+					<button className='border border-white p-2'>Movies</button>
+					<button className='border border-white p-2 ml-0'>TV Shows</button>
+				</div> */}
 				{genMovies.length > 0 &&
 					<>
 						<div className='h-16 p-4 text-3xl mb-4 ml-4 text-white drop-shadow flex items-center gap-2'>

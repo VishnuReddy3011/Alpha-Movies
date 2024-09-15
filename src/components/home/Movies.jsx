@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
+import Loader from "../../Loader/Loader";
 import { MovieContext } from "../../MovieContextWrapper";
 import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
-import Loader from "../../Loader/Loader";
 
 
 const Movies = React.memo(({movies, pageNo, handleNext, handlePrevious, setPageNo, title, isMovie, loader}) => {
@@ -13,7 +13,7 @@ const Movies = React.memo(({movies, pageNo, handleNext, handlePrevious, setPageN
       {
         loader ? (<div className="text-white text-4xl h-[600px] w-full flex justify-center items-center"><Loader /></div>)
           :
-        (<div className="flex flex-wrap gap-16 justify-start ml-9">
+        (<div className="flex flex-wrap gap-[4vw] p-[2vw]">
           {
             movies.map((movieObj) => {
               return (
